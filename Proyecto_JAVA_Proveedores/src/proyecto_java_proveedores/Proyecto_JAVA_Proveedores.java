@@ -10,7 +10,7 @@ package proyecto_java_proveedores;
  */
 public class Proyecto_JAVA_Proveedores {
 
-    /**
+    //Chinga tu madre javier
      * @param args the command line arguments
      */
     public static void main(String[] args) {
