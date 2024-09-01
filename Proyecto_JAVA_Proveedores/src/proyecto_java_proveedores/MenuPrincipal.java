@@ -16,8 +16,10 @@ public class MenuPrincipal extends JFrame{
     JToggleButton EliminarDatos=new JToggleButton(); 
     JToggleButton VerDatos=new JToggleButton(); 
     List<JToggleButton> Lista_Opciones=new ArrayList<>(); 
+    ConexionBD Conexion_Actual; 
     /// Constructor de la Clase.
-    public MenuPrincipal(){
+    public MenuPrincipal(ConexionBD Conexion_Actual){
+        this.Conexion_Actual=Conexion_Actual; 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setBounds(10,10,1080,720);
         this.setLayout(new FlowLayout());
@@ -38,8 +40,7 @@ public class MenuPrincipal extends JFrame{
         Opciones.setSize(250,50);
         Opciones.setMinimumSize(new Dimension(1080,70));
         Opciones.setMaximumSize(new Dimension(1080,70));
-        Opciones.setBorder(new EmptyBorder(10,10,10,10));
-        Opciones.setBackground(Color.blue); 
+        Opciones.setBorder(new EmptyBorder(10,10,10,10)); 
         Opciones.setLayout(new FlowLayout(FlowLayout.CENTER, 20,10));
         this.InicializarOpcionesCombo();
         /// Inicializar Panel de Contenido.
@@ -53,6 +54,7 @@ public class MenuPrincipal extends JFrame{
         JP_PanelPrincipal.add(Opciones); 
         JP_PanelPrincipal.add(Contenido); 
         this.add(JP_PanelPrincipal); 
+        this.pack();
     }
     private void InicializarOpcionesCombo(){
         InsertarDatos.setText("Insertar Datos");
@@ -77,13 +79,18 @@ public class MenuPrincipal extends JFrame{
                 for(JToggleButton Opcion : Lista_Opciones){
                     if(Opcion!=e.getSource()){
                         Opcion.setSelected(false);
+                        Contenido.removeAll();
+                        Contenido.repaint();
                     }
                 }
                 if(e.getSource()==Lista_Opciones.get(0)){
-                    Panel_InsertarDatos Insertar=new Panel_InsertarDatos(); 
+                    Panel_InsertarDatos Insertar=new Panel_InsertarDatos(MenuPrincipal.this.Conexion_Actual); 
                     Contenido.add(Insertar);
+                    Contenido.repaint();
                 }
+                MenuPrincipal.this.pack();
             }
+            
         };   
         return Click_Opcion;
     }

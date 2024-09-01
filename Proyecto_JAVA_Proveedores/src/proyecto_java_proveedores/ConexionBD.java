@@ -1,5 +1,7 @@
 package proyecto_java_proveedores;
 import java.sql.*; 
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 public class ConexionBD {
     /// Variables necesarias para la conexión con la Base de Datos.
@@ -23,5 +25,17 @@ public class ConexionBD {
           JOptionPane.showMessageDialog(null, "Error al Conectar la Base de Datos: "+e.toString(), "Notificación de Conexión", JOptionPane.ERROR_MESSAGE);   
         }
     }
-    
+    public List<String> GetTablasDisponibles(){
+        List<String> Ls_Tablas=new ArrayList(); 
+        String query="SHOW TABLES"; 
+        try(Statement stm=Nueva_Conexion.createStatement()){
+            ResultSet resultado=stm.executeQuery(query); 
+            while(resultado.next()){
+                Ls_Tablas.add(resultado.getString("Tables_in_proveedores"));
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error al Obtener las Tablas: ", "Notificación de Estado", JOptionPane.ERROR_MESSAGE);
+        }
+        return Ls_Tablas; 
+    }
 }
