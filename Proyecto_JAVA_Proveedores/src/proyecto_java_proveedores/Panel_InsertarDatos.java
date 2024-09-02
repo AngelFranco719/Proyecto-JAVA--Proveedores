@@ -59,7 +59,10 @@ public class Panel_InsertarDatos extends JPanel{
                     /// Lógica para mostrar el JPanel de Oferta.
                     Formulario_Insert_Oferta Insert_Oferta=new Formulario_Insert_Oferta(Panel_InsertarDatos.this.Conexion_Actual); 
                     Panel_InsertarDatos.this.Contenido.add(Insert_Oferta);
-                }  
+                }else if(Tabla_Seleccionada.equals("factura")){
+                    Formulario_Insert_Factura Insert_Factura=new Formulario_Insert_Factura(Panel_InsertarDatos.this.Conexion_Actual); 
+                    Panel_InsertarDatos.this.Contenido.add(Insert_Factura);
+                }
             }
         }; 
         this.repaint(); 
