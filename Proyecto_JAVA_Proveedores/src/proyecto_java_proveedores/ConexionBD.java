@@ -59,7 +59,6 @@ public class ConexionBD {
         }
         return ID; 
     }
-    
     /// Función que guarda el resultado de sentencias del tipo "SELECT * FROM Tabla"
     public List <List<String>> GetSelectAllFromResult(String Tabla){
         List <List<String>> Resultado=new ArrayList(); 
@@ -80,7 +79,6 @@ public class ConexionBD {
         }
         return Resultado; 
     }
-    /// Ejecutar Inserts.
     public void EjecutarSentencia(PreparedStatement Query){
         try{
             Query.executeUpdate();
@@ -89,5 +87,4 @@ public class ConexionBD {
             JOptionPane.showMessageDialog(null, "Error al Ejecutar la Sentencia"+e.toString());
         }
     }
-    
 }
