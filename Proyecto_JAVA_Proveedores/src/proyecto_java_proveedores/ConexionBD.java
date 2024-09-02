@@ -25,6 +25,11 @@ public class ConexionBD {
           JOptionPane.showMessageDialog(null, "Error al Conectar la Base de Datos: "+e.toString(), "Notificación de Conexión", JOptionPane.ERROR_MESSAGE);   
         }
     }
+    
+    public Connection getConnection(){
+        return this.Nueva_Conexion;
+    }
+    
     /// Función para Obtener Todas las Tablas en la Base de Datos.
     public List<String> GetTablasDisponibles(){
         List<String> Ls_Tablas=new ArrayList(); 
@@ -75,6 +80,14 @@ public class ConexionBD {
         }
         return Resultado; 
     }
-    
+    /// Ejecutar Inserts.
+    public void EjecutarSentencia(PreparedStatement Query){
+        try{
+            Query.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Se ha Agregado el Registro a la Base de Datos","Ingreso Exitoso", JOptionPane.INFORMATION_MESSAGE);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error al Ejecutar la Sentencia"+e.toString());
+        }
+    }
     
 }

@@ -280,7 +280,6 @@ public class JDPie extends javax.swing.JDialog {
             nom_p=jTextField2.getText();
             
             ObjPie.SetPieza(id_p,jTextField2.getText(),jTextField5.getText(),jTextField6.getText(),jTextField8.getText(),jTextField7.getText(),jTextField3.getText(),jTextField4.getText());
-            
             JDPie2 pieza2 = new JDPie2(this,true,ObjPie,this.Conexion_Actual);
            
             

@@ -8,17 +8,19 @@ package Confirmacion_Inserts;
 
 import proyecto_java_proveedores.ConexionBD;
 import proyecto_java_proveedores.Pieza;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author kidelacruz
  */
 public class JDPie2 extends javax.swing.JDialog {
-Pieza op;
     /**
      * Creates new form JDPac2
      */
      ConexionBD Conexion_Actual; 
+     Pieza op;
 
     public JDPie2(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
@@ -28,39 +30,42 @@ Pieza op;
      public JDPie2(java.awt.Dialog parent, boolean modal,Pieza obp, ConexionBD Conexion_Actual) {
         super(parent, modal);
         initComponents();
+        this.op=obp; 
         this.Conexion_Actual=Conexion_Actual;
-        op=obp;
-        jLabel1.setText(String.valueOf(obp.getId_pieza()));
-        jLabel3.setText(obp.getNombre_pie());
-        jLabel4.setText(obp.getCategoria_pie());
-        jLabel9.setText(obp.getCodigo_pie());
-        jLabel12.setText(obp.getColor_pie());
-        jLabel14.setText(obp.getDescripcion_pie());
-        jLabel16.setText(obp.getMaterial_pie());
-        jLabel18.setText(obp.getDimensiones_pie());
-       
-       
+        this.InicializarVentana();
     }
+     
+     public void InicializarVentana(){
+        System.out.println(op.getId_pieza());
+        jLabel1.setText(String.valueOf(op.getId_pieza()));
+        jLabel3.setText(op.getNombre_pie());
+        jLabel4.setText(op.getCategoria_pie());
+        jLabel9.setText(op.getCodigo_pie());
+        jLabel12.setText(op.getColor_pie());
+        jLabel14.setText(op.getDescripcion_pie());
+        jLabel16.setText(op.getMaterial_pie());
+        jLabel18.setText(op.getDimensiones_pie());
+        this.setVisible(true);
+     }
     
       public void guardaPie() {
-
-        String sentenc = "INSERT INTO pieza "
-                + "(id_pieza,,pie_categoria,pie_codigo,pie_nombre,pie_color,pie_descripcion,pie_material,pie_dimensiones) "
-                + "VALUES (" 
-                + op.getId_pieza() + ",'"
-                + op.getCategoria_pie() + "','"
-                + op.getCodigo_pie() + "','"
-                + op.getNombre_pie() + "','"
-                + op.getColor_pie() + "','"
-                + op.getDescripcion_pie() + "','"
-                + op.getMaterial_pie() + "','"
-                + op.getDimensiones_pie() + "','";
-        op.DespPie();
-        System.out.println("SQL " + sentenc);
-        ///Objmsql.guardarAlgo(sentenc);
-
-        System.out.println("Pieza Guardada");
-
+        try{
+            String Query="INSERT INTO Pieza "
+                    + "(pie_categoria,pie_codigo,pie_nombre,"
+                    + "pie_color,pie_descripcion,pie_material,pie_dimensiones)"
+                    +"VALUES(?,?,?,?,?,?,?)";
+            PreparedStatement pstm=this.Conexion_Actual.getConnection().prepareStatement(Query);
+            pstm.setString(1,op.getCategoria_pie()); 
+            pstm.setString(2,op.getCodigo_pie());
+            pstm.setString(3,op.getNombre_pie());
+            pstm.setString(4,op.getColor_pie());
+            pstm.setString(5,op.getDescripcion_pie());
+            pstm.setString(6,op.getMaterial_pie());
+            pstm.setString(7,op.getDimensiones_pie());
+            this.Conexion_Actual.EjecutarSentencia(pstm);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error al Crear la Sentencia: "+e.toString());
+        }     
     }
     
     
