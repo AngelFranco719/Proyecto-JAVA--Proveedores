@@ -5,9 +5,10 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.*;
-
+import Formularios_Inserts.*;
 public class Panel_InsertarDatos extends JPanel{
     JPanel Encabezado=new JPanel(); 
+    JPanel Contenido=new JPanel(); 
     List <String>Ls_Tablas=new ArrayList();
     ConexionBD Conexion_Actual; 
     JComboBox Tablas=new JComboBox(); 
@@ -15,8 +16,9 @@ public class Panel_InsertarDatos extends JPanel{
     public Panel_InsertarDatos(ConexionBD Conexion_Actual){
         this.Conexion_Actual=Conexion_Actual; 
         this.setVisible(true); 
-        this.setPreferredSize(new Dimension(1000,500));
-        this.setMaximumSize(new Dimension(1000,500));
+        this.setPreferredSize(new Dimension(1000,550));
+        this.setMaximumSize(new Dimension(1000,550));
+        this.setAlignmentX(Component.CENTER_ALIGNMENT);
         /// Inicializar Encabezado.
         Encabezado.setLayout(new FlowLayout(FlowLayout.LEFT, 20,0));
         Encabezado.setPreferredSize(new Dimension(1000, 50));
@@ -34,7 +36,12 @@ public class Panel_InsertarDatos extends JPanel{
         B_Seleccionar.addActionListener(this.Manejador_Button());
         Encabezado.add(Tablas);
         Encabezado.add(B_Seleccionar);
+        
+        /// Inicializar JPanel Contenido.
+        Contenido.setPreferredSize(new Dimension(1000, 700));
+        
         this.add(Encabezado); 
+        this.add(Contenido);
         this.repaint();
     }
     private ActionListener Manejador_Button(){
@@ -42,18 +49,20 @@ public class Panel_InsertarDatos extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String Tabla_Seleccionada=Panel_InsertarDatos.this.Tablas.getSelectedItem().toString();
-                JOptionPane.showMessageDialog(null,Tabla_Seleccionada);
                 if(Tabla_Seleccionada.equals("proveedor")){
                     /// Lógica para mostrar el JPanel de Proveedor.
                 }   
                 else if(Tabla_Seleccionada.equals("pieza")){
-                    /// Lógica para mostrar el JPanel de Pieza.
+                  JDPie Insert_Pieza=new JDPie(Panel_InsertarDatos.this.Contenido,Conexion_Actual); 
                 }  
                 else if(Tabla_Seleccionada.equals("oferta")){
                     /// Lógica para mostrar el JPanel de Oferta.
+                    Formulario_Insert_Oferta Insert_Oferta=new Formulario_Insert_Oferta(Panel_InsertarDatos.this.Conexion_Actual); 
+                    Panel_InsertarDatos.this.Contenido.add(Insert_Oferta);
                 }  
             }
         }; 
+        this.repaint(); 
         return Seleccionar_Tabla; 
     }
 }
