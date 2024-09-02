@@ -5,6 +5,7 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import javax.swing.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -18,6 +19,18 @@ public class Formulario_Insert_Oferta extends JPanel{
     JPanel Encabezado=new JPanel();
     JPanel Contenido=new JPanel();
     JButton B_Insertar=new JButton(); 
+    int ID_Proveedor; 
+    int ID_Pieza; 
+    String Proveedor_Seleccionado; 
+    String Pieza_Seleccionada; 
+    String Precio_Seleccionado; 
+    String FechaI_Seleccionada;
+    String FechaF_Seleccionada; 
+    JComboBox CB_IDProveedor=new JComboBox(); /// Inicializar ComboBox de Proveedores.
+    JComboBox CB_IDPieza=new JComboBox(); /// Inicializar ComboBox de Pieza.
+    JTextField TF_Precio=new JTextField();/// Para Ingresar el Precio.
+    JDateChooser DC_FechaInicio=new JDateChooser(); /// Para Ingresar la Fecha de Inicio.
+    JDateChooser DC_FechaFin=new JDateChooser();  /// Para Ingresar la Fecha de Fin.
     public Formulario_Insert_Oferta(ConexionBD Conexion_Actual){
         this.Conexion_Actual=Conexion_Actual; 
         /// Inicializar Panel.
@@ -47,8 +60,6 @@ public class Formulario_Insert_Oferta extends JPanel{
         JLabel L_IDPieza=new JLabel(); 
         Configurar_Labels(L_IDProveedor, "Selecciona un Proveedor: ");
         Configurar_Labels(L_IDPieza, "Selecciona una Pieza: "); 
-        JComboBox CB_IDProveedor=new JComboBox(); /// Inicializar ComboBox de Proveedores.
-        JComboBox CB_IDPieza=new JComboBox(); /// Inicializar ComboBox de Pieza.
         Proveedores=Conexion_Actual.GetSelectAllFromResult("proveedor"); ///Obtener Todos los Proveedores.
         Pieza=Conexion_Actual.GetSelectAllFromResult("pieza"); /// Obtener Todas las Piezas.
         Inicializar_ComboBox(CB_IDProveedor, Proveedores); 
@@ -62,12 +73,10 @@ public class Formulario_Insert_Oferta extends JPanel{
         P_Fechas.setPreferredSize(new Dimension(900, 50)); 
         P_Fechas.setMaximumSize(new Dimension(900, 50)); 
         P_Fechas.setLayout(new FlowLayout(FlowLayout.LEFT,20,15)); 
-        JLabel L_FechaInicio=new JLabel(); 
-        JDateChooser DC_FechaInicio=new JDateChooser(); 
+        JLabel L_FechaInicio=new JLabel();  
         Configurar_Labels(L_FechaInicio, "Selecciona la Fecha de Inicio: "); 
         Configurar_DateChoosers(DC_FechaInicio); 
         JLabel L_FechaFin=new JLabel(); 
-        JDateChooser DC_FechaFin=new JDateChooser(); 
         Configurar_Labels(L_FechaFin, "Selecciona la Fecha de Fin: "); 
         Configurar_DateChoosers(DC_FechaFin); 
         P_Fechas.add(L_FechaInicio);
@@ -79,7 +88,6 @@ public class Formulario_Insert_Oferta extends JPanel{
         P_Precio.setMaximumSize(new Dimension(900,30));
         P_Precio.setLayout(new FlowLayout(FlowLayout.LEFT,20,15));  
         JLabel L_Precio=new JLabel(); 
-        JTextField TF_Precio=new JTextField();
         Configurar_Labels(L_Precio, "Ingresa el Precio del Producto: "); 
         TF_Precio.setPreferredSize(new Dimension(100, 25));
         P_Precio.add(L_Precio);
@@ -115,12 +123,33 @@ public class Formulario_Insert_Oferta extends JPanel{
             Opciones.addItem(fila.get(1)); /// Agregar Items al ComboBox.
         }
     }
+    private int ObtenerIDs(List <List<String>> Registros, String Seleccionado){
+        int id=0; 
+        for(List<String> fila : Registros){
+            if(fila.get(1).equals(Seleccionado))
+            {
+             id=Integer.parseInt(fila.get(0));
+             return id;
+            }
+        }
+        return id; 
+    }
     
     private ActionListener Funcion_Insertar(){
         ActionListener Click_Insertar=new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Confirmacion_Oferta Confirmar=new Confirmacion_Oferta();
+                Proveedor_Seleccionado=CB_IDProveedor.getSelectedItem().toString();
+                Pieza_Seleccionada=CB_IDPieza.getSelectedItem().toString();
+                Precio_Seleccionado=TF_Precio.getText();
+                SimpleDateFormat Formato=new SimpleDateFormat("yyyy-MM-dd"); 
+                FechaI_Seleccionada=Formato.format(DC_FechaInicio.getDate());
+                FechaF_Seleccionada=Formato.format(DC_FechaFin.getDate());
+                ID_Proveedor=ObtenerIDs(Proveedores, Proveedor_Seleccionado); 
+                ID_Pieza=ObtenerIDs(Pieza, Pieza_Seleccionada); 
+                JOptionPane.showMessageDialog(null, "ID_Pieza:"+ID_Pieza);
+                Confirmacion_Oferta Confirmar=new Confirmacion_Oferta(Proveedor_Seleccionado,Pieza_Seleccionada, 
+                        Precio_Seleccionado, FechaI_Seleccionada, FechaF_Seleccionada, ID_Proveedor, ID_Pieza, Conexion_Actual);
             }
         }; 
         return Click_Insertar; 
