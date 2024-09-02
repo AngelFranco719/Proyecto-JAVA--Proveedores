@@ -53,7 +53,7 @@ public class Panel_InsertarDatos extends JPanel{
                     /// Lógica para mostrar el JPanel de Proveedor.
                 }   
                 else if(Tabla_Seleccionada.equals("pieza")){
-                    /// Lógica para mostrar el JPanel de Pieza.
+                  JDPie Insert_Pieza=new JDPie(Panel_InsertarDatos.this.Contenido,Conexion_Actual); 
                 }  
                 else if(Tabla_Seleccionada.equals("oferta")){
                     /// Lógica para mostrar el JPanel de Oferta.

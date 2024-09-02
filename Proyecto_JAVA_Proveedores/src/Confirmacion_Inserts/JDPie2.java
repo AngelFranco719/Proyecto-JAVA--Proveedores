@@ -18,15 +18,17 @@ Pieza op;
     /**
      * Creates new form JDPac2
      */
+     ConexionBD Conexion_Actual; 
+
     public JDPie2(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
 
-     public JDPie2(java.awt.Dialog parent, boolean modal,Pieza obp ) {
+     public JDPie2(java.awt.Dialog parent, boolean modal,Pieza obp, ConexionBD Conexion_Actual) {
         super(parent, modal);
         initComponents();
-    
+        this.Conexion_Actual=Conexion_Actual;
         op=obp;
         jLabel1.setText(String.valueOf(obp.getId_pieza()));
         jLabel3.setText(obp.getNombre_pie());
@@ -41,7 +43,7 @@ Pieza op;
     }
     
       public void guardaPie() {
-        ConexionBD Objmsql = new ConexionBD();
+
         String sentenc = "INSERT INTO pieza "
                 + "(id_pieza,,pie_categoria,pie_codigo,pie_nombre,pie_color,pie_descripcion,pie_material,pie_dimensiones) "
                 + "VALUES (" 
@@ -55,7 +57,7 @@ Pieza op;
                 + op.getDimensiones_pie() + "','";
         op.DespPie();
         System.out.println("SQL " + sentenc);
-        Objmsql.guardarAlgo(sentenc);
+        ///Objmsql.guardarAlgo(sentenc);
 
         System.out.println("Pieza Guardada");
 

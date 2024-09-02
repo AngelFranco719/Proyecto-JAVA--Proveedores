@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import proyecto_java_proveedores.ConexionBD;
 import Confirmacion_Inserts.JDPie2;
+import javax.swing.JPanel;
 import proyecto_java_proveedores.Pieza;
 
 /**
@@ -25,16 +26,17 @@ public class JDPie extends javax.swing.JDialog {
     String sentenc;
     String id_p;
     String nom_p;
-    
+    ConexionBD Conexion_Actual; 
     int ultimo;
     ResultSet resc = null;
     /**
      * Creates new form JDMed
      */
-    public JDPie(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
+    public JDPie(JPanel parent, ConexionBD Conexion_Actual) {
         
+        initComponents();
+        this.Conexion_Actual=Conexion_Actual;
+        this.setVisible(true);
         if (consulPie() != null) {
             id_p = String.valueOf(consulPie() + 1);
         }
@@ -260,18 +262,8 @@ public class JDPie extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     public Integer consulPie() {
-        ConexionBD Objmsql = new ConexionBD();
-        String sultimo = "";
-        sentenc = new String("SELECT MAX(id_pieza) FROM  pieza");
-        try {
-            resc = Objmsql.consultarAlgo(sentenc);
-            while (resc.next()) {
-                ultimo = resc.getInt("MAX(id_pieza)");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(JDPie.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println("Existen " + ultimo + " piezas");
+        ultimo= this.Conexion_Actual.GetLastID("Pieza");
+        JOptionPane.showMessageDialog(null, ultimo);
         return ultimo;
     }
     
@@ -288,10 +280,9 @@ public class JDPie extends javax.swing.JDialog {
             nom_p=jTextField2.getText();
             
             ObjPie.SetPieza(id_p,jTextField2.getText(),jTextField5.getText(),jTextField6.getText(),jTextField8.getText(),jTextField7.getText(),jTextField3.getText(),jTextField4.getText());
-
-            JDPie2 pieza2 = new JDPie2(this,true,ObjPie);
-             this.setVisible(false);
-            pieza2.setVisible(true);
+            
+            JDPie2 pieza2 = new JDPie2(this,true,ObjPie,this.Conexion_Actual);
+           
             
            
         }
@@ -366,7 +357,7 @@ public class JDPie extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        /*java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JDPie dialog = new JDPie(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -378,6 +369,7 @@ public class JDPie extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
+        */
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

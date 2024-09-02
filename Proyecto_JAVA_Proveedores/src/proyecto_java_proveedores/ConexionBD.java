@@ -39,6 +39,21 @@ public class ConexionBD {
         }
         return Ls_Tablas; 
     }
+    // Obtener el Ultimo ID 
+    public int GetLastID(String Tabla){
+        int ID=0; 
+        String ID_Tabla="ID_"+Tabla;
+        try(Statement stm=Nueva_Conexion.createStatement()){
+            String sentencia="SELECT MAX("+ID_Tabla+") FROM "+Tabla;
+            ResultSet resultado=stm.executeQuery(sentencia);
+            while(resultado.next()){
+                ID=resultado.getInt(1);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error al Obtener ID"+e.toString()); 
+        }
+        return ID; 
+    }
     
     /// Función que guarda el resultado de sentencias del tipo "SELECT * FROM Tabla"
     public List <List<String>> GetSelectAllFromResult(String Tabla){
@@ -60,5 +75,6 @@ public class ConexionBD {
         }
         return Resultado; 
     }
+    
     
 }
