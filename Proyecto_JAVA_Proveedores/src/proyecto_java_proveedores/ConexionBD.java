@@ -25,6 +25,7 @@ public class ConexionBD {
           JOptionPane.showMessageDialog(null, "Error al Conectar la Base de Datos: "+e.toString(), "Notificación de Conexión", JOptionPane.ERROR_MESSAGE);   
         }
     }
+    /// Función para Obtener Todas las Tablas en la Base de Datos.
     public List<String> GetTablasDisponibles(){
         List<String> Ls_Tablas=new ArrayList(); 
         String query="SHOW TABLES"; 
@@ -37,5 +38,35 @@ public class ConexionBD {
             JOptionPane.showMessageDialog(null, "Error al Obtener las Tablas: ", "Notificación de Estado", JOptionPane.ERROR_MESSAGE);
         }
         return Ls_Tablas; 
+    }
+    
+    /// Función que guarda el resultado de sentencias del tipo "SELECT * FROM Tabla"
+    public List <List<String>> GetSelectAllFromResult(String Tabla){
+        List <List<String>> Resultado=new ArrayList(); 
+        String sentencia="SELECT * FROM "+Tabla; 
+        try(Statement stm = Nueva_Conexion.createStatement()){
+            ResultSet query=stm.executeQuery(sentencia);
+            ResultSetMetaData query_md=query.getMetaData();
+            int columnas=query_md.getColumnCount(); 
+            while(query.next()){
+                List <String> fila=new ArrayList(); 
+                for(int i=1; i<columnas+1; i++){
+                    fila.add(query.getString(i));
+                }
+                Resultado.add(fila); 
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Error al Obtener los Datos: "+e.toString(),"Error de Petición", JOptionPane.ERROR_MESSAGE);
+        }
+        return Resultado; 
+    }
+    /// Función para Ejecutar una Sentencia MySQL
+    public void EjecutarSentencia(PreparedStatement Query){
+        try{
+            Query.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Se ha Agregado el Registro a la Base de Datos","Ingreso Exitoso", JOptionPane.INFORMATION_MESSAGE);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error al Ejecutar la Sentencia: "+e.toString()); 
+        }
     }
 }
