@@ -51,6 +51,8 @@ public class Panel_InsertarDatos extends JPanel{
                 String Tabla_Seleccionada=Panel_InsertarDatos.this.Tablas.getSelectedItem().toString();
                 if(Tabla_Seleccionada.equals("proveedor")){
                     /// Lógica para mostrar el JPanel de Proveedor.
+                    JPProveedor Insertar_Proveedor=new JPProveedor(Conexion_Actual); 
+                    Panel_InsertarDatos.this.Contenido.add(Insertar_Proveedor);
                 }   
                 else if(Tabla_Seleccionada.equals("pieza")){
                   JDPie Insert_Pieza=new JDPie(Panel_InsertarDatos.this.Contenido,Conexion_Actual); 
