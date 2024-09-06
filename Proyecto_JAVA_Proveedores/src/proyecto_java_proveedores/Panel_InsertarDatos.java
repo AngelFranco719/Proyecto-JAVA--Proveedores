@@ -7,13 +7,15 @@ import java.util.ArrayList;
 import javax.swing.*;
 import Formularios_Inserts.*;
 public class Panel_InsertarDatos extends JPanel{
+    JFrame Contenedor; 
     JPanel Encabezado=new JPanel(); 
     JPanel Contenido=new JPanel(); 
     List <String>Ls_Tablas=new ArrayList();
     ConexionBD Conexion_Actual; 
     JComboBox Tablas=new JComboBox(); 
     JButton B_Seleccionar=new JButton(); 
-    public Panel_InsertarDatos(ConexionBD Conexion_Actual){
+    public Panel_InsertarDatos(ConexionBD Conexion_Actual, JFrame Contenedor){
+        this.Contenedor=Contenedor; 
         this.Conexion_Actual=Conexion_Actual; 
         this.setVisible(true); 
         this.setPreferredSize(new Dimension(1000,550));
@@ -49,25 +51,35 @@ public class Panel_InsertarDatos extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String Tabla_Seleccionada=Panel_InsertarDatos.this.Tablas.getSelectedItem().toString();
+                Panel_InsertarDatos.this.Contenido.removeAll();
                 if(Tabla_Seleccionada.equals("proveedor")){
                     /// Lógica para mostrar el JPanel de Proveedor.
                     JPProveedor Insertar_Proveedor=new JPProveedor(Conexion_Actual); 
                     Panel_InsertarDatos.this.Contenido.add(Insertar_Proveedor);
+                    Panel_InsertarDatos.this.repaint();
+                    Contenedor.pack();
+                    
                 }   
                 else if(Tabla_Seleccionada.equals("pieza")){
                   JDPie Insert_Pieza=new JDPie(Panel_InsertarDatos.this.Contenido,Conexion_Actual); 
+                  Panel_InsertarDatos.this.repaint(); 
+                  Contenedor.pack();
                 }  
                 else if(Tabla_Seleccionada.equals("oferta")){
                     /// Lógica para mostrar el JPanel de Oferta.
                     Formulario_Insert_Oferta Insert_Oferta=new Formulario_Insert_Oferta(Panel_InsertarDatos.this.Conexion_Actual); 
                     Panel_InsertarDatos.this.Contenido.add(Insert_Oferta);
+                    Panel_InsertarDatos.this.repaint(); 
+                    Contenedor.pack();
                 }else if(Tabla_Seleccionada.equals("factura")){
                     Formulario_Insert_Factura Insert_Factura=new Formulario_Insert_Factura(Panel_InsertarDatos.this.Conexion_Actual); 
                     Panel_InsertarDatos.this.Contenido.add(Insert_Factura);
+                    Panel_InsertarDatos.this.repaint(); 
+                    Contenedor.pack();
                 }
             }
         }; 
-        this.repaint(); 
+        this.repaint();
         return Seleccionar_Tabla; 
     }
 }

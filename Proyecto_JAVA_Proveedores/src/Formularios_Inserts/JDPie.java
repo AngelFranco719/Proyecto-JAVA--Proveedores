@@ -81,7 +81,7 @@ public class JDPie extends javax.swing.JDialog {
         jLabel5.setText("Nombre:");
 
         jLabel8.setBackground(java.awt.Color.white);
-        jLabel8.setText("ID médico:");
+        jLabel8.setText("ID_Pieza:");
 
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

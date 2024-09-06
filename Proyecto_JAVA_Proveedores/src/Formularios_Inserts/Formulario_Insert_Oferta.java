@@ -106,6 +106,7 @@ public class Formulario_Insert_Oferta extends JPanel{
         Encabezado.add(Titulo);
         this.add(Encabezado);
         this.add(Contenido); 
+        this.repaint(); 
     }
     
     private void Configurar_Labels(JLabel Label, String Texto){
