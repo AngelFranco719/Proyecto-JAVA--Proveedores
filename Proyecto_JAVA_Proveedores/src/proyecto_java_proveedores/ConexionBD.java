@@ -9,7 +9,7 @@ public class ConexionBD {
     String nombre_bd="proveedores"; 
     String usuario="root";
     String contraseña=""; 
-    String url="jdbc:mysql://localhost:3307/"+nombre_bd; 
+    String url="jdbc:mysql://localhost:3306/"+nombre_bd; 
     String driver="com.mysql.cj.jdbc.Driver"; 
     boolean conectado=false; 
     Connection Nueva_Conexion; 
