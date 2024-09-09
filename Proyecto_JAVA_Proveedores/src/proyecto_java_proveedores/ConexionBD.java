@@ -59,6 +59,36 @@ public class ConexionBD {
         }
         return ID; 
     }
+    /// Ejecutar Sentencia de la que se espera solo un resultado.
+    public String getUniqueResultQuery(String Query){
+        String Resultado=""; 
+        try(Statement stm=Nueva_Conexion.createStatement()){
+            ResultSet resultado=stm.executeQuery(Query);
+            while(resultado.next()){
+                return Resultado=resultado.getString(1);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error al Ejecutar la Sentencia"+e.toString()); 
+        }
+        return Resultado; 
+    }
+    
+    public String getLastID(String Tabla){
+        String lastID=""; 
+        try (Statement stm=this.Nueva_Conexion.createStatement()){
+            String ID="ID_"+Tabla; 
+            String query="SELECT MAX("+ID+") FROM "+Tabla;
+            ResultSet rs=stm.executeQuery(query);
+            while(rs.next()){
+                lastID=rs.getString(1); 
+            }
+        }catch(Exception e){
+         JOptionPane.showMessageDialog(null,"Error al Obtener el Último ID: "+e.toString());
+        }
+        
+        return lastID; 
+    }
+    
     /// Función que guarda el resultado de sentencias del tipo "SELECT * FROM Tabla"
     public List <List<String>> GetSelectAllFromResult(String Tabla){
         List <List<String>> Resultado=new ArrayList(); 
@@ -79,6 +109,11 @@ public class ConexionBD {
         }
         return Resultado; 
     }
+<<<<<<< Updated upstream
+=======
+  
+    
+>>>>>>> Stashed changes
     public void EjecutarSentencia(PreparedStatement Query){
         try{
             Query.executeUpdate();
