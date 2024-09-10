@@ -69,6 +69,14 @@ public class Panel_InsertarDatos extends JPanel{
                     /// Lógica para mostrar el JPanel de Oferta.
                     Formulario_Insert_Oferta Insert_Oferta=new Formulario_Insert_Oferta(Panel_InsertarDatos.this.Conexion_Actual); 
                     Panel_InsertarDatos.this.Contenido.add(Insert_Oferta);
+
+                }  
+                else if(Tabla_Seleccionada.equals("compra")){
+                    /// Lógica para mostrar el JPanel de Compra.
+                    Formulario_Insert_Compra Formulario_Compra=new Formulario_Insert_Compra(Conexion_Actual);
+                    Panel_InsertarDatos.this.Contenido.add(Formulario_Compra); 
+                }  
+
                     Panel_InsertarDatos.this.repaint(); 
                     Contenedor.pack();
                 }else if(Tabla_Seleccionada.equals("factura")){
@@ -76,6 +84,12 @@ public class Panel_InsertarDatos extends JPanel{
                     Panel_InsertarDatos.this.Contenido.add(Insert_Factura);
                     Panel_InsertarDatos.this.repaint(); 
                     Contenedor.pack();
+                }else if(Tabla_Seleccionada.equals("compra")){
+                    Formulario_Insert_Compra Formulario_Compra=new Formulario_Insert_Compra(Conexion_Actual);
+                    Panel_InsertarDatos.this.Contenido.add(Formulario_Compra);
+                    Panel_InsertarDatos.this.repaint(); 
+                    Contenedor.pack();
+                }
                 }
             }
         }; 
