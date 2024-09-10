@@ -279,10 +279,15 @@ public class Formulario_Insert_Compra extends javax.swing.JPanel {
 
     private void B_IngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_IngresarMouseClicked
         // TODO add your handling code here:
-        numero=Integer.parseInt(Lb_Numero.getText());
+        try{
+            numero=Integer.parseInt(Lb_Numero.getText());
         cantidad=Integer.parseInt(Lb_Cantidad.getText());
         subtotal=Float.parseFloat(Lb_Subtotal.getText());
         Confirmacion_Compra Confirmacion=new Confirmacion_Compra(Factura_Seleccionada,Oferta_Seleccionada, Conexion_Actual, ID_Actual, cantidad,subtotal,numero); 
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Ingresa Correctamente los Datos: "+e.toString());
+        }
+        
     }//GEN-LAST:event_B_IngresarMouseClicked
 
     private void Cb_FacturaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Cb_FacturaItemStateChanged

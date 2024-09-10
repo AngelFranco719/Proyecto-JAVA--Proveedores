@@ -44,6 +44,21 @@ public class ConexionBD {
         }
         return Ls_Tablas; 
     }
+    
+    /// Obtener Atributos de una Tabla
+    public List<String> GetAtributosTabla(String Tabla){
+        List<String> Atributos=new ArrayList();
+        try(Statement stm=Nueva_Conexion.createStatement()){
+            ResultSet campos=stm.executeQuery("Describe "+Tabla);
+            while(campos.next()){
+                Atributos.add(campos.getString(1));
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error al Obtener los Campos: "+e.toString());
+        }
+        return Atributos;
+    }
+    
     // Obtener el Ultimo ID 
     public int GetLastID(String Tabla){
         int ID=0; 
@@ -87,6 +102,31 @@ public class ConexionBD {
         }
         
         return lastID; 
+    }
+    
+    public List<List<String>> getResultBusqueda(String Tabla, String Atributo,String Signo ,String Criterio){
+        List<List<String>> Resultado=new ArrayList();
+        try(Statement stm=Nueva_Conexion.createStatement()){
+            String Query="SELECT * FROM "+Tabla+" WHERE "+Atributo+" "+Signo+" "+Criterio;
+            ResultSet resultado=stm.executeQuery(Query);
+            ResultSetMetaData query_md=resultado.getMetaData();
+            int Columnas=query_md.getColumnCount()+1;
+            while(resultado.next()){
+                List<String>Fila=new ArrayList();
+                for(int i=1; i<Columnas; i++){
+                    Fila.add(resultado.getString(i));
+                }
+                Resultado.add(Fila);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error al obtener la busqueda: "+e.toString());
+        }
+        return Resultado; 
+    }
+    public List<List<String>> getResultBusqueda(String Tabla, String Atributo){
+        List<List<String>> Resultado=new ArrayList();
+        
+        return Resultado; 
     }
     
     /// Función que guarda el resultado de sentencias del tipo "SELECT * FROM Tabla"
