@@ -109,17 +109,12 @@ public class ConexionBD {
         }
         return Resultado; 
     }
-<<<<<<< Updated upstream
-=======
-  
-    
->>>>>>> Stashed changes
     public void EjecutarSentencia(PreparedStatement Query){
         try{
             Query.executeUpdate();
             JOptionPane.showMessageDialog(null, "Se ha Agregado el Registro a la Base de Datos","Ingreso Exitoso", JOptionPane.INFORMATION_MESSAGE);
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error al Ejecutar la Sentencia"+e.toString());
+            JOptionPane.showMessageDialog(null, "Error al Ejecutar la Sentencia: "+e.toString()); 
         }
     }
 }

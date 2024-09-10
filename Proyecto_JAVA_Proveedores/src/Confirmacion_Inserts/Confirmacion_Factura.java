@@ -7,30 +7,27 @@ import javax.swing.border.*;
 import java.sql.*;
 import proyecto_java_proveedores.ConexionBD;
 
-public class Confirmacion_Oferta extends JFrame{
+public class Confirmacion_Factura extends JFrame{
     /// Atributos de la Clase
     JPanel Panel_Principal=new JPanel(); 
     int IDProveedor_Seleccionado; 
-    int IDPieza_Seleccionado; 
     String Proveedor_Seleccionado; 
-    String Pieza_Seleccionada; 
-    String Precio_Seleccionado; 
+    float Total_Seleccionado; 
     String FechaInicio_Seleccionada; 
-    String FechaFin_Seleccionada;
+    int NumeroFactura_Seleccionado;
+    float iva;
     JButton B_Aceptar=new JButton();
     JButton B_Cancelar=new JButton();
     ConexionBD ConexionActual; 
-    public Confirmacion_Oferta(String Proveedor, String Pieza, String Precio, 
-            String FechaInicio, String FechaFin, int ID_Proveedor, int ID_Pieza, ConexionBD Conexion){
+    public Confirmacion_Factura(String Proveedor, float Total, int NumeroFactura, 
+            String FechaInicio, int ID_Proveedor, ConexionBD Conexion){
         /// Inicialización de Variables; 
         this.ConexionActual=Conexion; 
         this.IDProveedor_Seleccionado=ID_Proveedor;
-        this.IDPieza_Seleccionado=ID_Pieza; 
-        this.Proveedor_Seleccionado=Proveedor; 
-        this.Pieza_Seleccionada=Pieza; 
-        this.Precio_Seleccionado=Precio; 
+        this.Proveedor_Seleccionado=Proveedor;  
+        this.Total_Seleccionado=Total; 
+        this.NumeroFactura_Seleccionado=NumeroFactura; 
         this.FechaInicio_Seleccionada=FechaInicio; 
-        this.FechaFin_Seleccionada=FechaFin; 
         /// Establecer Vista del JFrame.
         this.setBounds(10,10,700,400);
         this.setVisible(true);
@@ -55,24 +52,18 @@ public class Confirmacion_Oferta extends JFrame{
         JTextField TF_Proveedor=new JTextField(); 
         this.ConfigurarLabel(L_Proveedor, "El Proveedor ");
         this.ConfigurarTextField(TF_Proveedor, this.Proveedor_Seleccionado);
-        JLabel L_Pieza = new JLabel(); 
-        this.ConfigurarLabel(L_Pieza, " ofrece un(a)  ");
-        JTextField TF_Pieza=new JTextField();
-        this.ConfigurarTextField(TF_Pieza,this.Pieza_Seleccionada);
         P_Oracion.add(L_Proveedor);
         P_Oracion.add(TF_Proveedor); 
-        P_Oracion.add(L_Pieza); 
-        P_Oracion.add(TF_Pieza); 
         Contenido.add(P_Oracion); 
         /// Segunda Oración.
         JPanel P_OracionD=new JPanel(); 
         this.ConfigurarPanelOracion(P_OracionD);
-        JLabel L_Precio=new JLabel(); 
-        JTextField TF_Precio=new JTextField(); 
-        this.ConfigurarLabel(L_Precio,"A un precio de: ");
-        this.ConfigurarTextField(TF_Precio, "$"+this.Precio_Seleccionado);
-        P_OracionD.add(L_Precio); 
-        P_OracionD.add(TF_Precio); 
+        JLabel L_Total=new JLabel(); 
+        JTextField TF_Total=new JTextField(); 
+        this.ConfigurarLabel(L_Total,"Total de la Factura: ");
+        this.ConfigurarTextField(TF_Total, "$"+this.Total_Seleccionado);
+        P_OracionD.add(L_Total); 
+        P_OracionD.add(TF_Total); 
         Contenido.add(P_OracionD); 
          /// Tercera Oración.
         JPanel P_OracionC=new JPanel(); 
@@ -83,13 +74,17 @@ public class Confirmacion_Oferta extends JFrame{
         this.ConfigurarTextField(TF_FechaI,this.FechaInicio_Seleccionada);
         P_OracionC.add(L_FechaI); 
         P_OracionC.add(TF_FechaI); 
-        JLabel L_FechaF=new JLabel(); 
-        JTextField TF_FechaF=new JTextField(); 
-        this.ConfigurarLabel(L_FechaF,"Hasta el ");
-        this.ConfigurarTextField(TF_FechaF, this.FechaFin_Seleccionada);
-        P_OracionC.add(L_FechaF); 
-        P_OracionC.add(TF_FechaF); 
         Contenido.add(P_OracionC);
+        /// Segunda Oración.
+        JPanel P_OracionE=new JPanel(); 
+        this.ConfigurarPanelOracion(P_OracionE);
+        JLabel L_NumeroFactura=new JLabel(); 
+        JTextField TF_NumeroFactura=new JTextField(); 
+        this.ConfigurarLabel(L_NumeroFactura,"Numero de la Factura: ");
+        this.ConfigurarTextField(TF_NumeroFactura, "$"+this.NumeroFactura_Seleccionado);
+        P_OracionD.add(L_NumeroFactura); 
+        P_OracionD.add(TF_NumeroFactura); 
+        Contenido.add(P_OracionE); 
         /// Botones de Confirmación
         JPanel Botones=new JPanel(); 
         this.ConfigurarPanelOracion(Botones);
@@ -111,7 +106,7 @@ public class Confirmacion_Oferta extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 int Opcion=JOptionPane.showConfirmDialog(null,"¿Quiere Cancelar los Cambios?","Cancelar Insert", JOptionPane.YES_NO_OPTION);
                 if(Opcion==JOptionPane.YES_OPTION){
-                    Confirmacion_Oferta.this.dispose();
+                    Confirmacion_Factura.this.dispose();
                 }
             }
         }; 
@@ -124,7 +119,7 @@ public class Confirmacion_Oferta extends JFrame{
                 int Opcion=JOptionPane.showConfirmDialog(null,"¿Quiere Aplicar los Cambios?","Aplicar Insert", JOptionPane.YES_NO_OPTION);
                 if(Opcion==JOptionPane.YES_OPTION){
                     GenerarSentencia(); 
-                    Confirmacion_Oferta.this.dispose();
+                    Confirmacion_Factura.this.dispose();
                 }
             }
         }; 
@@ -132,16 +127,17 @@ public class Confirmacion_Oferta extends JFrame{
     }
     
     private void GenerarSentencia(){
+        iva= (float) ((Total_Seleccionado)*0.016);
         try{
-            String Query="INSERT INTO Oferta"
-                + "(ID_Proveedor, ID_Pieza, Ofe_Precio, Ofe_Fecha_Inicio, Ofe_Fecha_Final) "
+            String Query="INSERT INTO factura"
+                + "(ID_Proveedor, Fac_Total, Fac_Fecha, Fac_Numero_Factura,Fac_IVA) "
                 + "VALUES(?,?,?,?,?);";
             PreparedStatement stm=ConexionActual.getConnection().prepareStatement(Query);
             stm.setInt(1, IDProveedor_Seleccionado);
-            stm.setInt(2, IDPieza_Seleccionado);
-            stm.setString(3, Precio_Seleccionado);
-            stm.setString(4, FechaInicio_Seleccionada);
-            stm.setString(5, FechaFin_Seleccionada);    
+            stm.setFloat(2, Total_Seleccionado);
+            stm.setString(3, FechaInicio_Seleccionada);
+            stm.setInt(4, NumeroFactura_Seleccionado); 
+            stm.setInt(5, (int) iva);  
             this.ConexionActual.EjecutarSentencia(stm);
             stm.close(); 
         }catch(Exception e){

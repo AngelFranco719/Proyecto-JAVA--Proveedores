@@ -84,7 +84,7 @@ public class MenuPrincipal extends JFrame{
                     }
                 }
                 if(e.getSource()==Lista_Opciones.get(0)){
-                    Panel_InsertarDatos Insertar=new Panel_InsertarDatos(MenuPrincipal.this.Conexion_Actual); 
+                    Panel_InsertarDatos Insertar=new Panel_InsertarDatos(MenuPrincipal.this.Conexion_Actual, MenuPrincipal.this); 
                     Contenido.add(Insertar);
                     Contenido.repaint();
                 }
