@@ -8,8 +8,8 @@ public class ConexionBD {
     /// Cambien el valor de las variables con sus datos del servidor MySQL.
     String nombre_bd="proveedores"; 
     String usuario="root";
-    String contraseña="crxzsql"; 
-    String url="jdbc:mysql://localhost:3306/"+nombre_bd; 
+    String contraseña=""; 
+    String url="jdbc:mysql://localhost:3307/"+nombre_bd; 
     String driver="com.mysql.cj.jdbc.Driver"; 
     boolean conectado=false; 
     Connection Nueva_Conexion; 
