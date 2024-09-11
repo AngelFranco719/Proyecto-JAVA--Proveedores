@@ -225,16 +225,25 @@ public class JP_VerDatos extends javax.swing.JPanel {
 
     // Obtener la fila seleccionada
     int selectedRow = T_Resultados.getSelectedRow();
-
+    String Tabla=Cb_Tablas.getSelectedItem().toString();
+    try{
     // Verificar que se ha seleccionado una fila
     if (selectedRow != -1) {
         // Eliminar la fila del modelo
+        int id=Integer.parseInt(Resultados.get(selectedRow).get(0));
+        Conexion_Actual.EliminarDatos(Tabla,id);
         model.removeRow(selectedRow);
         JOptionPane.showMessageDialog(null, "Fila eliminada exitosamente.");
+        
+        
+        
     } else {
         // Mostrar un mensaje si no se ha seleccionado ninguna fila
         JOptionPane.showMessageDialog(null, "Selecciona una fila para eliminar.");
     }
+    }catch(Exception e){
+           JOptionPane.showMessageDialog(null,"Ingresa los datos correctamente.");
+       }
     }//GEN-LAST:event_B_EliminarActionPerformed
 
     private void InicializarTablas(){
