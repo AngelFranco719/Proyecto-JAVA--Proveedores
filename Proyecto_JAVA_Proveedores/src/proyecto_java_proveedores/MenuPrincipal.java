@@ -15,6 +15,7 @@ public class MenuPrincipal extends JFrame{
     JToggleButton ActualizarDatos=new JToggleButton(); 
     JToggleButton EliminarDatos=new JToggleButton(); 
     JToggleButton VerDatos=new JToggleButton(); 
+    JToggleButton BuscarDatos = new JToggleButton();
     List<JToggleButton> Lista_Opciones=new ArrayList<>(); 
     ConexionBD Conexion_Actual; 
     /// Constructor de la Clase.
@@ -59,12 +60,17 @@ public class MenuPrincipal extends JFrame{
     private void InicializarOpcionesCombo(){
         InsertarDatos.setText("Insertar Datos");
         ActualizarDatos.setText("Actualizar Datos");
+        BuscarDatos.setText("Buscar Datos");
         EliminarDatos.setText("Eliminar Datos");
         VerDatos.setText("Ver Datos");
+        
         Lista_Opciones.add(InsertarDatos);
         Lista_Opciones.add(ActualizarDatos);
+        Lista_Opciones.add(BuscarDatos);
         Lista_Opciones.add(EliminarDatos);
         Lista_Opciones.add(VerDatos);
+        
+        
         for(JToggleButton Opcion : Lista_Opciones){
             Opciones.add(Opcion); 
             Opcion.addActionListener(this.ManejoToggleButton());
@@ -86,6 +92,13 @@ public class MenuPrincipal extends JFrame{
                 if(e.getSource()==Lista_Opciones.get(0)){
                     Panel_InsertarDatos Insertar=new Panel_InsertarDatos(MenuPrincipal.this.Conexion_Actual, MenuPrincipal.this); 
                     Contenido.add(Insertar);
+                    Contenido.repaint();
+                }
+                
+                // Lógica para mostrar el panel de búsqueda
+                if (e.getSource() == BuscarDatos) {
+                    Panel_BuscarDatos Buscar = new Panel_BuscarDatos(MenuPrincipal.this.Conexion_Actual, MenuPrincipal.this);
+                    Contenido.add(Buscar);
                     Contenido.repaint();
                 }
                 MenuPrincipal.this.pack();
