@@ -13,8 +13,6 @@ public class MenuPrincipal extends JFrame{
     JPanel Contenido=new JPanel(); 
     /// ToggleButtons para manejar la opción seleccionada por el usuario.
     JToggleButton InsertarDatos=new JToggleButton();
-    JToggleButton ActualizarDatos=new JToggleButton(); 
-    JToggleButton EliminarDatos=new JToggleButton(); 
     JToggleButton VerDatos=new JToggleButton(); 
     List<JToggleButton> Lista_Opciones=new ArrayList<>(); 
     ConexionBD Conexion_Actual; 
@@ -59,13 +57,9 @@ public class MenuPrincipal extends JFrame{
     }
     private void InicializarOpcionesCombo(){
         InsertarDatos.setText("Insertar Datos");
-        ActualizarDatos.setText("Actualizar Datos");
-        EliminarDatos.setText("Eliminar Datos");
         VerDatos.setText("Ver Datos");
         
         Lista_Opciones.add(InsertarDatos);
-        Lista_Opciones.add(ActualizarDatos);
-        Lista_Opciones.add(EliminarDatos);
         Lista_Opciones.add(VerDatos);
         
         
@@ -91,7 +85,7 @@ public class MenuPrincipal extends JFrame{
                     Panel_InsertarDatos Insertar=new Panel_InsertarDatos(MenuPrincipal.this.Conexion_Actual, MenuPrincipal.this); 
                     Contenido.add(Insertar);
                     Contenido.repaint();
-                }else if(e.getSource()==Lista_Opciones.get(3)){
+                }else if(e.getSource()==Lista_Opciones.get(1)){
                     JP_VerDatos verDatos=new JP_VerDatos(Conexion_Actual);  
                     Contenido.add(verDatos);
                     Contenido.repaint();

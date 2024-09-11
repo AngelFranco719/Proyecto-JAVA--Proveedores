@@ -43,6 +43,8 @@ public class JP_VerDatos extends javax.swing.JPanel {
         Cb_Signos = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         T_Resultados = new javax.swing.JTable();
+        B_Actualizar = new javax.swing.JButton();
+        B_Eliminar = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         setMaximumSize(new java.awt.Dimension(607, 420));
@@ -101,6 +103,15 @@ public class JP_VerDatos extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(T_Resultados);
 
+        B_Actualizar.setText("Actualizar Selección");
+        B_Actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_ActualizarActionPerformed(evt);
+            }
+        });
+
+        B_Eliminar.setText("Eliminar Selección");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,12 +119,9 @@ public class JP_VerDatos extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(253, 253, 253)
                 .addComponent(jLabel1)
-                .addGap(36, 36, 36))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,7 +140,15 @@ public class JP_VerDatos extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Cb_Atributo, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(B_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(B_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(B_Actualizar)
+                                .addGap(18, 18, 18)
+                                .addComponent(B_Eliminar))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -154,7 +170,11 @@ public class JP_VerDatos extends javax.swing.JPanel {
                     .addComponent(Cb_Signos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(B_Actualizar)
+                    .addComponent(B_Eliminar))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -188,6 +208,10 @@ public class JP_VerDatos extends javax.swing.JPanel {
        }
         
     }//GEN-LAST:event_B_BuscarMouseClicked
+
+    private void B_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_ActualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_B_ActualizarActionPerformed
 
     private void InicializarTablas(){
         Tablas=Conexion_Actual.GetTablasDisponibles();
@@ -241,7 +265,9 @@ public class JP_VerDatos extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton B_Actualizar;
     private javax.swing.JButton B_Buscar;
+    private javax.swing.JButton B_Eliminar;
     private javax.swing.JComboBox<String> Cb_Atributo;
     private javax.swing.JComboBox<String> Cb_Signos;
     private javax.swing.JComboBox<String> Cb_Tablas;
