@@ -111,6 +111,11 @@ public class JP_VerDatos extends javax.swing.JPanel {
         });
 
         B_Eliminar.setText("Eliminar Selección");
+        B_Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_EliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -212,6 +217,25 @@ public class JP_VerDatos extends javax.swing.JPanel {
     private void B_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_ActualizarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_B_ActualizarActionPerformed
+
+    private void B_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_EliminarActionPerformed
+        // TODO add your handling code here:
+       // Obtener el modelo de la tabla
+    DefaultTableModel model = (DefaultTableModel) T_Resultados.getModel();
+
+    // Obtener la fila seleccionada
+    int selectedRow = T_Resultados.getSelectedRow();
+
+    // Verificar que se ha seleccionado una fila
+    if (selectedRow != -1) {
+        // Eliminar la fila del modelo
+        model.removeRow(selectedRow);
+        JOptionPane.showMessageDialog(null, "Fila eliminada exitosamente.");
+    } else {
+        // Mostrar un mensaje si no se ha seleccionado ninguna fila
+        JOptionPane.showMessageDialog(null, "Selecciona una fila para eliminar.");
+    }
+    }//GEN-LAST:event_B_EliminarActionPerformed
 
     private void InicializarTablas(){
         Tablas=Conexion_Actual.GetTablasDisponibles();
