@@ -223,6 +223,7 @@
         <Property name="text" type="java.lang.String" value="Actualizar Selecci&#xf3;n"/>
       </Properties>
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="B_ActualizarMouseClicked"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="B_ActualizarActionPerformed"/>
       </Events>
     </Component>

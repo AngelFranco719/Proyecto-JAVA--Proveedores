@@ -15,6 +15,7 @@ public class JP_VerDatos extends javax.swing.JPanel {
     List <String> Tablas=new ArrayList(); 
     List <String> Atributos=new ArrayList(); 
     List<List<String>>Resultados=new ArrayList(); 
+    List<String> Resultado_Seleccionado=new ArrayList(); 
     public JP_VerDatos(ConexionBD Conexion_Actual) {
         initComponents();
         this.Conexion_Actual=Conexion_Actual; 
@@ -104,6 +105,11 @@ public class JP_VerDatos extends javax.swing.JPanel {
         jScrollPane1.setViewportView(T_Resultados);
 
         B_Actualizar.setText("Actualizar Selección");
+        B_Actualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_ActualizarMouseClicked(evt);
+            }
+        });
         B_Actualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 B_ActualizarActionPerformed(evt);
@@ -213,6 +219,11 @@ public class JP_VerDatos extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_B_ActualizarActionPerformed
 
+    private void B_ActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_ActualizarMouseClicked
+        this.Resultado_Seleccionado=this.getSelected(); 
+        JOptionPane.showMessageDialog(null, Resultado_Seleccionado);
+    }//GEN-LAST:event_B_ActualizarMouseClicked
+
     private void InicializarTablas(){
         Tablas=Conexion_Actual.GetTablasDisponibles();
         Cb_Tablas.removeAllItems();
@@ -254,6 +265,13 @@ public class JP_VerDatos extends javax.swing.JPanel {
             case 4 -> Signo=">="; 
         }
         return Signo;
+    }
+    
+    private List<String> getSelected(){
+        int seleccionado=T_Resultados.getSelectedRow();
+        List<String>Seleccionado=this.Resultados.get(seleccionado);
+        return Seleccionado; 
+        
     }
     
     private void InicializarCampos(String Tabla){

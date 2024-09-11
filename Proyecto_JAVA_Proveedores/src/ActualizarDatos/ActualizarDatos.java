@@ -1,20 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package ActualizarDatos;
 
-/**
- *
- * @author Usuario
- */
+import java.util.List;
+import java.util.ArrayList;
+import proyecto_java_proveedores.ConexionBD;
+
 public class ActualizarDatos extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ActualizarDatos
-     */
-    public ActualizarDatos() {
+    ConexionBD Conexion_Actual; 
+    String Tabla_Seleccionada; 
+    List<String> Registro_Seleccionado=new ArrayList(); 
+    public ActualizarDatos(ConexionBD Conexion_Actual, String Tabla_Seleccionada, List<String> Registro_Seleccionado) {
         initComponents();
+        this.Conexion_Actual=Conexion_Actual;
+        this.Tabla_Seleccionada=Tabla_Seleccionada; 
+        this.Registro_Seleccionado=Registro_Seleccionado; 
     }
 
     /**
@@ -26,17 +25,36 @@ public class ActualizarDatos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        P_Actualizar = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout P_ActualizarLayout = new javax.swing.GroupLayout(P_Actualizar);
+        P_Actualizar.setLayout(P_ActualizarLayout);
+        P_ActualizarLayout.setHorizontalGroup(
+            P_ActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 388, Short.MAX_VALUE)
+        );
+        P_ActualizarLayout.setVerticalGroup(
+            P_ActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 288, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(P_Actualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(P_Actualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -70,13 +88,9 @@ public class ActualizarDatos extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ActualizarDatos().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel P_Actualizar;
     // End of variables declaration//GEN-END:variables
 }
