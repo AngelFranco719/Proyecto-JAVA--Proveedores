@@ -132,8 +132,8 @@ public class ConexionBD {
         
         
         try(Statement stm=Nueva_Conexion.createStatement()){
-            String sentencia="DELETE FROM "+tabla+"WHERE ID_"+tabla+"="+id; 
-            stm.executeQuery(sentencia);
+            String sentencia= "DELETE FROM " + tabla + " WHERE " + "ID_" + tabla + " = " + id;
+            stm.executeUpdate(sentencia);
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Error al eliminar el registro: ", "Notificación de Estado", JOptionPane.ERROR_MESSAGE);

@@ -230,13 +230,16 @@ public class JP_VerDatos extends javax.swing.JPanel {
     // Verificar que se ha seleccionado una fila
     if (selectedRow != -1) {
         // Eliminar la fila del modelo
+        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar la fila seleccionada?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        if (confirmacion == JOptionPane.YES_OPTION) {
         int id=Integer.parseInt(Resultados.get(selectedRow).get(0));
         Conexion_Actual.EliminarDatos(Tabla,id);
         model.removeRow(selectedRow);
         JOptionPane.showMessageDialog(null, "Fila eliminada exitosamente.");
-        
-        
-        
+        } else {
+            // Mostrar mensaje si la eliminación ha sido cancelada
+            JOptionPane.showMessageDialog(null, "Eliminación cancelada.");
+        }
     } else {
         // Mostrar un mensaje si no se ha seleccionado ninguna fila
         JOptionPane.showMessageDialog(null, "Selecciona una fila para eliminar.");
