@@ -9,7 +9,6 @@ public class ConexionBD {
     String nombre_bd="proveedores"; 
     String usuario="root";
     String contraseña=""; 
-    String url="jdbc:mysql://localhost:3306/"+nombre_bd; 
     String driver="com.mysql.cj.jdbc.Driver"; 
     boolean conectado=false; 
     Connection Nueva_Conexion; 
@@ -128,15 +127,14 @@ public class ConexionBD {
         
         return Resultado; 
     }
+    /// Método para Borrar Datos.
     public void EliminarDatos(String tabla, int id){
-        
-        
         try(Statement stm=Nueva_Conexion.createStatement()){
             String sentencia= "DELETE FROM " + tabla + " WHERE " + "ID_" + tabla + " = " + id;
             stm.executeUpdate(sentencia);
             
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error al eliminar el registro: ", "Notificación de Estado", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al eliminar el registro: "+e.toString(), "Notificación de Estado", JOptionPane.ERROR_MESSAGE);
         }
     }
     /// Función que guarda el resultado de sentencias del tipo "SELECT * FROM Tabla"
