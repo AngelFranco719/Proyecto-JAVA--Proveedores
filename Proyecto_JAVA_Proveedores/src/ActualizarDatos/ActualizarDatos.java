@@ -34,8 +34,10 @@ public class ActualizarDatos extends JFrame{
                 this.repaint();
                 return Formulario_Compra; 
             case "factura":
-                Panel_Actual=new Formulario_Insert_Factura(Conexion_Actual);
-                break; 
+                Formulario_Insert_Factura Formulario_Factura=new Formulario_Insert_Factura(Conexion_Actual,Registro, this, VerDatos); 
+                this.revalidate();
+                this.repaint();
+                return Formulario_Factura; 
             case "oferta":
                 Formulario_Insert_Oferta Formulario_Oferta=new Formulario_Insert_Oferta(Conexion_Actual,Registro,this, VerDatos);
                 this.revalidate();
