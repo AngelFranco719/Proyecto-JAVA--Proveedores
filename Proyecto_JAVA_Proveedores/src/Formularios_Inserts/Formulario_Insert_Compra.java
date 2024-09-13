@@ -1,8 +1,10 @@
 package Formularios_Inserts;
 import Confirmacion_Inserts.Confirmacion_Compra;
+import VerDatos.JP_VerDatos;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import proyecto_java_proveedores.ConexionBD; 
 
@@ -13,11 +15,15 @@ public class Formulario_Insert_Compra extends javax.swing.JPanel {
      List<List<String>> Ofertas=new ArrayList(); 
      List <String> Factura_Seleccionada; 
      List<String>Oferta_Seleccionada; 
+     List<String> Registro; 
     int Oferta_Selec; 
     int Factura_Selec; 
     int ID_Actual; 
     int cantidad; 
     int numero; 
+    JP_VerDatos VerDatos; 
+    JFrame Contenedor; 
+    boolean actualizado=false;
     float subtotal; 
     public Formulario_Insert_Compra(ConexionBD Conexion_Actual) {
         initComponents();
@@ -32,6 +38,64 @@ public class Formulario_Insert_Compra extends javax.swing.JPanel {
         Inicializar_Combos(Cb_Factura, Facturas);
         Inicializar_Combos(Cb_Oferta, Ofertas);
     }
+    public Formulario_Insert_Compra(ConexionBD Conexion_Actual, List<String> Registro, JFrame Contenedor, JP_VerDatos VerDatos) {
+        initComponents();
+        this.VerDatos=VerDatos; 
+        this.Conexion_Actual=Conexion_Actual;
+        this.Registro=Registro; 
+        this.Contenedor=Contenedor; 
+        Facturas=Conexion_Actual.GetSelectAllFromResult("Factura");
+        Ofertas=Conexion_Actual.GetSelectAllFromResult("Oferta");
+        ID_Actual=Integer.parseInt(Registro.get(0));
+        Lb_IDActual.setText(String.valueOf(ID_Actual)); 
+        Lb_IDActual.setEditable(false);
+        Cb_Factura.removeAllItems();
+        Cb_Oferta.removeAllItems();
+        Inicializar_Combos(Cb_Factura, Facturas);
+        Cb_Factura.setSelectedItem(Registro.get(1));
+        Inicializar_Combos(Cb_Oferta, Ofertas);
+        Cb_Oferta.setSelectedItem(Registro.get(2));
+        Lb_Numero.setText(Registro.get(3));
+        Lb_Cantidad.setText(Registro.get(5));
+        Lb_Subtotal.setText(Registro.get(4));
+        B_Ingresar.setText("Actualizar Datos");
+    }
+    
+    public boolean getActualizado(){
+        return actualizado; 
+    }
+    
+    private void VerificarActualizaciones(){
+        List<String> Actualizaciones=new ArrayList(); 
+        List<String> Campos= Conexion_Actual.GetAtributosTabla("compra");
+        List<String> nuevosDatos=new ArrayList();
+        if(!Registro.get(1).equals(Cb_Factura.getSelectedItem().toString())){
+            Actualizaciones.add(Campos.get(1));
+            nuevosDatos.add(Cb_Factura.getSelectedItem().toString());
+        }
+        if(!Registro.get(2).equals(Cb_Oferta.getSelectedItem().toString())){
+            Actualizaciones.add(Campos.get(2));
+            nuevosDatos.add(Cb_Oferta.getSelectedItem().toString());
+        }
+        if(!Registro.get(3).equals(Lb_Numero.getText())){
+            Actualizaciones.add(Campos.get(3));
+            nuevosDatos.add(Lb_Numero.getText()); 
+        }
+        if(!Registro.get(4).equals(Lb_Subtotal.getText())){
+            Actualizaciones.add(Campos.get(4));
+            nuevosDatos.add(Lb_Subtotal.getText());
+        }  
+        if(!Registro.get(5).equals(Lb_Cantidad.getText())){
+            Actualizaciones.add(Campos.get(5));
+            nuevosDatos.add(Lb_Cantidad.getText()); 
+        } 
+        actualizado=Conexion_Actual.ActualizarRegistro("compra", Actualizaciones, nuevosDatos, Integer.parseInt(Registro.get(0)));
+        if(actualizado) {
+            this.VerDatos.InicializarTabla();
+            Contenedor.dispose();
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -279,11 +343,18 @@ public class Formulario_Insert_Compra extends javax.swing.JPanel {
 
     private void B_IngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_IngresarMouseClicked
         // TODO add your handling code here:
+        
         try{
             numero=Integer.parseInt(Lb_Numero.getText());
-        cantidad=Integer.parseInt(Lb_Cantidad.getText());
-        subtotal=Float.parseFloat(Lb_Subtotal.getText());
-        Confirmacion_Compra Confirmacion=new Confirmacion_Compra(Factura_Seleccionada,Oferta_Seleccionada, Conexion_Actual, ID_Actual, cantidad,subtotal,numero); 
+            cantidad=Integer.parseInt(Lb_Cantidad.getText());
+            subtotal=Float.parseFloat(Lb_Subtotal.getText());
+            if(B_Ingresar.getText().equals("Ingresar Datos")){
+                Confirmacion_Compra Confirmacion=new Confirmacion_Compra(Factura_Seleccionada,Oferta_Seleccionada, Conexion_Actual, ID_Actual, cantidad,subtotal,numero); 
+            }
+            else{
+                this.VerificarActualizaciones();
+            }
+        
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,"Ingresa Correctamente los Datos: "+e.toString());
         }

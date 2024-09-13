@@ -88,6 +88,7 @@ public class ConexionBD {
         return Resultado; 
     }
     
+    /// Obtener el ultimo ID de los registros de una tabla
     public String getLastID(String Tabla){
         String lastID=""; 
         try (Statement stm=this.Nueva_Conexion.createStatement()){
@@ -104,6 +105,7 @@ public class ConexionBD {
         return lastID; 
     }
     
+    /// Obtener el Resultado de una Busqueda con Critero
     public List<List<String>> getResultBusqueda(String Tabla, String Atributo,String Signo ,String Criterio){
         List<List<String>> Resultado=new ArrayList();
         try(Statement stm=Nueva_Conexion.createStatement()){
@@ -123,6 +125,52 @@ public class ConexionBD {
         }
         return Resultado; 
     }
+    
+    /// Función para Actualizar un Registro
+    public boolean ActualizarRegistro(String Tabla,List<String> Campos, List<String> Datos, int ID){
+        boolean exito=false; 
+        String Query="UPDATE "+Tabla+" SET ";
+        int i=1; 
+        while(i<=Campos.size()){
+            if(i!=Campos.size()){
+                Query+=Campos.get(i-1)+"="+this.StringCheck(Datos.get(i-1))+", ";
+            } 
+            else Query+=Campos.get(i-1)+"="+this.StringCheck(Datos.get(i-1));
+            i++;
+        }
+        Query+=" WHERE ID_"+Tabla+"="+ID; 
+        JOptionPane.showMessageDialog(null, Query);
+        try(Statement stm=Nueva_Conexion.createStatement()){
+            int seleccion=JOptionPane.showConfirmDialog(null, "¿Desea Actualizar el Registro?", "Confirmación", JOptionPane.YES_NO_OPTION);
+            if(seleccion==JOptionPane.YES_OPTION){
+                stm.executeUpdate(Query); 
+                JOptionPane.showMessageDialog(null, "Se ha actualizado el registro");
+                exito=true; 
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error al actualizar el Registro.");
+        }
+        return exito; 
+    }
+    
+    /// Método que rectifica si un campo es un string y agrega comillas para la la sentencia SQL.
+    public String StringCheck(String Campo){
+        String Resultado=""; 
+        try{
+            int i=Integer.parseInt(Campo);
+            return Campo; 
+        }catch(Exception e){
+            try{
+                float i=Float.parseFloat(Campo);
+                return Campo;
+            }catch(Exception ex){
+                return Resultado="'"+Campo+"'";
+            }
+        }
+    }
+    
+    
+    /// Obtener el Resultado de una Busqueda sin Criterio.
     public List<List<String>> getResultBusqueda(String Tabla, String Atributo){
         List<List<String>> Resultado=new ArrayList();
         

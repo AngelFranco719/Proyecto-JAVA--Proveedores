@@ -4,6 +4,7 @@
  */
 package VerDatos;
 
+import ActualizarDatos.ActualizarDatos;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -15,6 +16,10 @@ public class JP_VerDatos extends javax.swing.JPanel {
     List <String> Tablas=new ArrayList(); 
     List <String> Atributos=new ArrayList(); 
     List<List<String>>Resultados=new ArrayList(); 
+    String Tabla;
+    String Atributo;
+    String Signos; 
+    String Criterio;
     List<String> Resultado_Seleccionado=new ArrayList(); 
     public JP_VerDatos(ConexionBD Conexion_Actual) {
         initComponents();
@@ -202,12 +207,10 @@ public class JP_VerDatos extends javax.swing.JPanel {
 
     private void B_BuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_BuscarMouseClicked
        try{
-           String Tabla=Cb_Tablas.getSelectedItem().toString();
-            String Atributo=Cb_Atributo.getSelectedItem().toString();
-            String Signos=getSigno();
-            String Criterio=JF_Criterio.getText();
-            Resultados=Conexion_Actual.getResultBusqueda(Tabla,Atributo,Signos,Criterio);
-            JOptionPane.showMessageDialog(null,Resultados);
+           Tabla=Cb_Tablas.getSelectedItem().toString();
+           Atributo=Cb_Atributo.getSelectedItem().toString();
+           Signos=getSigno();
+           Criterio=JF_Criterio.getText();
             InicializarTabla();
        }catch(Exception e){
            JOptionPane.showMessageDialog(null,"Ingresa los datos correctamente.");
@@ -221,7 +224,9 @@ public class JP_VerDatos extends javax.swing.JPanel {
 
     private void B_ActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_ActualizarMouseClicked
         this.Resultado_Seleccionado=this.getSelected(); 
-        JOptionPane.showMessageDialog(null, Resultado_Seleccionado);
+        String Tabla=this.
+         Cb_Tablas.getSelectedItem().toString();
+        ActualizarDatos Actualizar=new ActualizarDatos(Conexion_Actual,Tabla, Resultado_Seleccionado, this); 
     }//GEN-LAST:event_B_ActualizarMouseClicked
 
     private void InicializarTablas(){
@@ -232,7 +237,8 @@ public class JP_VerDatos extends javax.swing.JPanel {
         }
     }
     
-    private void InicializarTabla(){
+    public void InicializarTabla(){
+        Resultados=Conexion_Actual.getResultBusqueda(Tabla,Atributo,Signos,Criterio);
         DefaultTableModel model=new DefaultTableModel();
         for(String atributo : Atributos){
             model.addColumn(atributo);
@@ -243,7 +249,6 @@ public class JP_VerDatos extends javax.swing.JPanel {
         T_Resultados.setModel(model);
         T_Resultados.setVisible(true);
         T_Resultados.repaint();
-        
     }
     
     private void InicializarSignos(){

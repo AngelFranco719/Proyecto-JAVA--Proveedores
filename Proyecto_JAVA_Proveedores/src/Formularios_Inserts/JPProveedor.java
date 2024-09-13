@@ -23,6 +23,7 @@ public class JPProveedor extends javax.swing.JPanel {
         this.Conexion_Actual = Conexion_Actual;
         initComponents();
         this.repaint(); 
+        this.revalidate(); 
     }
     
     @SuppressWarnings("unchecked")
