@@ -157,4 +157,6 @@ public class ConexionBD {
             JOptionPane.showMessageDialog(null, "Error al Ejecutar la Sentencia: "+e.toString()); 
         }
     }
+    
+    
 }
