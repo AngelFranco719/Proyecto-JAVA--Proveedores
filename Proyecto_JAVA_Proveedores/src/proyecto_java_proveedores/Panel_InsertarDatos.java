@@ -61,7 +61,7 @@ public class Panel_InsertarDatos extends JPanel{
                     
                 }   
                 else if(Tabla_Seleccionada.equals("pieza")){
-                  JDPie Insert_Pieza=new JDPie(Panel_InsertarDatos.this.Contenido,Conexion_Actual); 
+                  JDPie Insert_Pieza=new JDPie(Panel_InsertarDatos.this.Contenido,Conexion_Actual, false); 
                   Panel_InsertarDatos.this.repaint(); 
                   Contenedor.pack();
                 }  
