@@ -1,7 +1,7 @@
 
 package Formularios_Inserts;
 import Confirmacion_Inserts.JFConfirmaProveedor;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import java.sql.*;
 import proyecto_java_proveedores.ConexionBD;
 
@@ -291,13 +291,14 @@ public class JPProveedor extends javax.swing.JPanel {
         // Muestra un mensaje en función del resultado
         if (resultado) {
             JOptionPane.showMessageDialog(this, "Actualización exitosa");
+            
         } else {
             JOptionPane.showMessageDialog(this, "Error al actualizar");
         }
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage());
-        e.printStackTrace();
-    }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage());
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnActualizarActionPerformed
     
     public void cargarDatos(String id, String empresa, String ciudad, String estado, String ubicacion, String telefono, String contacto, String correo) {
