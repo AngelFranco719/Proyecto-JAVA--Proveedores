@@ -1,9 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package VerDatos;
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -111,6 +106,11 @@ public class JP_VerDatos extends javax.swing.JPanel {
         });
 
         B_Eliminar.setText("Eliminar Selección");
+        B_Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_EliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -212,6 +212,37 @@ public class JP_VerDatos extends javax.swing.JPanel {
     private void B_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_ActualizarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_B_ActualizarActionPerformed
+
+    private void B_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_EliminarActionPerformed
+        // TODO add your handling code here:
+       // Obtener el modelo de la tabla
+    DefaultTableModel model = (DefaultTableModel) T_Resultados.getModel();
+
+    // Obtener la fila seleccionada
+    int selectedRow = T_Resultados.getSelectedRow();
+    String Tabla=Cb_Tablas.getSelectedItem().toString();
+    try{
+    // Verificar que se ha seleccionado una fila
+    if (selectedRow != -1) {
+        // Eliminar la fila del modelo
+        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar la fila seleccionada?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        if (confirmacion == JOptionPane.YES_OPTION) {
+        int id=Integer.parseInt(Resultados.get(selectedRow).get(0));
+        Conexion_Actual.EliminarDatos(Tabla,id);
+        model.removeRow(selectedRow);
+        JOptionPane.showMessageDialog(null, "Fila eliminada exitosamente.");
+        } else {
+            // Mostrar mensaje si la eliminación ha sido cancelada
+            JOptionPane.showMessageDialog(null, "Eliminación cancelada.");
+        }
+    } else {
+        // Mostrar un mensaje si no se ha seleccionado ninguna fila
+        JOptionPane.showMessageDialog(null, "Selecciona una fila para eliminar.");
+    }
+    }catch(Exception e){
+           JOptionPane.showMessageDialog(null,"Ingresa los datos correctamente.");
+       }
+    }//GEN-LAST:event_B_EliminarActionPerformed
 
     private void InicializarTablas(){
         Tablas=Conexion_Actual.GetTablasDisponibles();
