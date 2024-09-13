@@ -12,7 +12,7 @@ private String material_pie="";
 private String dimensiones_pie="";
 
 
-public void SetPieza(String cid,String cnom, String ccat, String ccod, String ccol, String cdes, String cmat, String cdim)
+public void SetPieza(String cid,String cnom, String ccod, String cdes, String cmat, String cdim, String ccat,  String ccol)
 {
         setId_pieza(cid);
         setNombre_pie(cnom);
