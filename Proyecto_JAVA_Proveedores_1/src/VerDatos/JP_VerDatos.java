@@ -4,9 +4,6 @@
  */
 package VerDatos;
 
-import ActualizarDatos.ActualizarDatos;
-
-import Formularios_Inserts.JDPie;
 import Formularios_Inserts.JPProveedor;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +13,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import proyecto_java_proveedores.ConexionBD;
-import proyecto_java_proveedores.Pieza;
 public class JP_VerDatos extends javax.swing.JPanel {
     ConexionBD Conexion_Actual; 
     List <String> Tablas=new ArrayList(); 
     List <String> Atributos=new ArrayList(); 
     List<List<String>>Resultados=new ArrayList(); 
-    String Tabla;
-    String Atributo;
-    String Signos; 
-    String Criterio;
     List<String> Resultado_Seleccionado=new ArrayList(); 
     public JP_VerDatos(ConexionBD Conexion_Actual) {
         initComponents();
@@ -69,6 +61,11 @@ public class JP_VerDatos extends javax.swing.JPanel {
         Cb_Tablas.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 Cb_TablasItemStateChanged(evt);
+            }
+        });
+        Cb_Tablas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Cb_TablasActionPerformed(evt);
             }
         });
 
@@ -190,6 +187,10 @@ public class JP_VerDatos extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void Cb_TablasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cb_TablasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Cb_TablasActionPerformed
+
     private void B_BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_BuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_B_BuscarActionPerformed
@@ -204,10 +205,12 @@ public class JP_VerDatos extends javax.swing.JPanel {
 
     private void B_BuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_BuscarMouseClicked
        try{
-           Tabla=Cb_Tablas.getSelectedItem().toString();
-           Atributo=Cb_Atributo.getSelectedItem().toString();
-           Signos=getSigno();
-           Criterio=JF_Criterio.getText();
+           String Tabla=Cb_Tablas.getSelectedItem().toString();
+            String Atributo=Cb_Atributo.getSelectedItem().toString();
+            String Signos=getSigno();
+            String Criterio=JF_Criterio.getText();
+            Resultados=Conexion_Actual.getResultBusqueda(Tabla,Atributo,Signos,Criterio);
+            JOptionPane.showMessageDialog(null,Resultados);
             InicializarTabla();
        }catch(Exception e){
            JOptionPane.showMessageDialog(null,"Ingresa los datos correctamente.");
@@ -215,63 +218,39 @@ public class JP_VerDatos extends javax.swing.JPanel {
         
     }//GEN-LAST:event_B_BuscarMouseClicked
 
+    private void B_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_ActualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_B_ActualizarActionPerformed
+
     private void B_ActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_ActualizarMouseClicked
         this.Resultado_Seleccionado=this.getSelected(); 
-        String Tabla=this.
-         Cb_Tablas.getSelectedItem().toString();
-        ActualizarDatos Actualizar=new ActualizarDatos(Conexion_Actual,Tabla, Resultado_Seleccionado, this); 
         JOptionPane.showMessageDialog(null, Resultado_Seleccionado); 
         actualizarSeleccion();
-        
     }//GEN-LAST:event_B_ActualizarMouseClicked
-
-    private void B_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_ActualizarActionPerformed
-        
-    }//GEN-LAST:event_B_ActualizarActionPerformed
 
     private void actualizarSeleccion(){
         int seleccionado=T_Resultados.getSelectedRow();
-        
+        List<String>Seleccionado=this.Resultados.get(seleccionado);
         
         // Asegurarse de que hay una fila seleccionada
         if (seleccionado != -1) {
             String id = T_Resultados.getValueAt(seleccionado, 0).toString();
-            String dato1 = T_Resultados.getValueAt(seleccionado, 1).toString();
-            String dato2 = T_Resultados.getValueAt(seleccionado, 2).toString();
-            String dato3 = T_Resultados.getValueAt(seleccionado, 3).toString();
-            String dato4 = T_Resultados.getValueAt(seleccionado, 4).toString();
-            String dato5 = T_Resultados.getValueAt(seleccionado, 5).toString();
-            String dato6 = T_Resultados.getValueAt(seleccionado, 6).toString();
-            String dato7 = T_Resultados.getValueAt(seleccionado, 7).toString();
+            String empresa = T_Resultados.getValueAt(seleccionado, 1).toString();
+            String ciudad = T_Resultados.getValueAt(seleccionado, 2).toString();
+            String estado = T_Resultados.getValueAt(seleccionado, 3).toString();
+            String ubicacion = T_Resultados.getValueAt(seleccionado, 4).toString();
+            String telefono = T_Resultados.getValueAt(seleccionado, 5).toString();
+            String contacto = T_Resultados.getValueAt(seleccionado, 6).toString();
+            String correo = T_Resultados.getValueAt(seleccionado, 7).toString();
+
+            // Crear una instancia del formulario de actualización
+            JPProveedor formularioActualizar = new JPProveedor(Conexion_Actual, true);
             
-            String tablaSeleccionada = Cb_Tablas.getSelectedItem().toString();
-            
-            switch (tablaSeleccionada) {
-                case "proveedor":
-                    // Crear una instancia del formulario de actualización
-                    JPProveedor formularioActualizar = new JPProveedor(Conexion_Actual, true);
-                    // Llenar los campos del formulario con los datos capturados
-                    formularioActualizar.cargarDatos(id ,dato1, dato2, dato3, dato4, dato5, dato6, dato7);
-                    // Mostrar el formulario
-                    mostrarFormulario(formularioActualizar, "Actualizar proveedor");
-                    break;
-                case "pieza":
-                    // Crear el objeto Pieza
-                    Pieza pieza = new Pieza();
-                    pieza.SetPieza(id, dato1, dato2, dato3, dato4, dato5, dato6, dato7);
-                    // Crear una instancia del formulario de actualización
-                    JDPie formularioActualizarPz = new JDPie(this, Conexion_Actual, true);
-                    formularioActualizarPz.cargarDatos(pieza);
-                    // Mostrar el formulario
-                    mostrarForm2(formularioActualizarPz, "Actualizar Pieza");
-                break;
-                    
-                default:
-                    JOptionPane.showMessageDialog(this, "Formulario para la tabla seleccionada no disponible.");
-                    break;
-            }            
-            
-            
+            // Llenar los campos del formulario con los datos capturados
+            formularioActualizar.cargarDatos(id ,empresa, ciudad, estado, ubicacion, telefono, contacto, correo);
+
+            // Mostrar el formulario
+            mostrarFormulario(formularioActualizar, "Actualizar proveedor");
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione una fila para actualizar", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
@@ -287,13 +266,6 @@ public class JP_VerDatos extends javax.swing.JPanel {
         dialogo.setVisible(true);
     }
     
-    private void mostrarForm2(JDialog dialogo, String titulo) {
-    dialogo.setTitle(titulo);
-    dialogo.pack();
-    dialogo.setLocationRelativeTo(null);
-    dialogo.setVisible(true);
-}
-    
     private void InicializarTablas(){
         Tablas=Conexion_Actual.GetTablasDisponibles();
         Cb_Tablas.removeAllItems();
@@ -302,8 +274,7 @@ public class JP_VerDatos extends javax.swing.JPanel {
         }
     }
     
-    public void InicializarTabla(){
-        Resultados=Conexion_Actual.getResultBusqueda(Tabla,Atributo,Signos,Criterio);
+    private void InicializarTabla(){
         DefaultTableModel model=new DefaultTableModel();
         for(String atributo : Atributos){
             model.addColumn(atributo);
@@ -314,6 +285,7 @@ public class JP_VerDatos extends javax.swing.JPanel {
         T_Resultados.setModel(model);
         T_Resultados.setVisible(true);
         T_Resultados.repaint();
+        
     }
     
     private void InicializarSignos(){
