@@ -3,9 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package VerDatos;
-
-import ActualizarDatos.ActualizarDatos;
-
+import Actualizar_Datos.ActualizarDatos;
 import Formularios_Inserts.JDPie;
 import Formularios_Inserts.JPProveedor;
 import java.util.ArrayList;
@@ -217,11 +215,11 @@ public class JP_VerDatos extends javax.swing.JPanel {
 
     private void B_ActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_ActualizarMouseClicked
         this.Resultado_Seleccionado=this.getSelected(); 
-        String Tabla=this.
-         Cb_Tablas.getSelectedItem().toString();
-        ActualizarDatos Actualizar=new ActualizarDatos(Conexion_Actual,Tabla, Resultado_Seleccionado, this); 
+        String Tabla=this.Cb_Tablas.getSelectedItem().toString();
         JOptionPane.showMessageDialog(null, Resultado_Seleccionado); 
-        actualizarSeleccion();
+        if(Tabla.equals("compra")||Tabla.equals("factura")||Tabla.equals("oferta")){
+            ActualizarDatos Formulario=new ActualizarDatos(Conexion_Actual, Tabla, Resultado_Seleccionado,this); 
+        } else actualizarSeleccion();
         
     }//GEN-LAST:event_B_ActualizarMouseClicked
 
