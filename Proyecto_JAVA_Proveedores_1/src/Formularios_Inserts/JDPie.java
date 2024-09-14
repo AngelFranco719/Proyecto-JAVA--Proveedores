@@ -1,7 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package Formularios_Inserts;
 
-import java.sql.*;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,6 +16,10 @@ import Confirmacion_Inserts.JDPie2;
 import javax.swing.JPanel;
 import proyecto_java_proveedores.Pieza;
 
+/**
+ *
+ * @author kidelacruz
+ */
 public class JDPie extends javax.swing.JDialog {
 
     static Pieza ObjPie = new Pieza();
@@ -20,35 +29,18 @@ public class JDPie extends javax.swing.JDialog {
     ConexionBD Conexion_Actual; 
     int ultimo;
     ResultSet resc = null;
-    
-    boolean esActualizacion;
-    
-    public JDPie(JPanel parent, ConexionBD Conexion_Actual, boolean esActualizacion) {
+    /**
+     * Creates new form JDMed
+     */
+    public JDPie(JPanel parent, ConexionBD Conexion_Actual) {
         
         initComponents();
         this.Conexion_Actual=Conexion_Actual;
-        this.esActualizacion = esActualizacion;   
-        
-        if(!esActualizacion){
-            // Asignar un nuevo ID para la inserción
-            if (consulPie() != null) {
-                id_p = String.valueOf(consulPie() + 1);
-            }
-            jTextField1.setText(id_p);
-        
         this.setVisible(true);
-        
+        if (consulPie() != null) {
+            id_p = String.valueOf(consulPie() + 1);
         }
-        configurarModo();
-        
-    }
-    
-    
-    private void configurarModo(){
-        // Mostrar btnActualizar y ocultar clickInsertar si está en modo actualización
-        jButton1.setVisible(!esActualizacion);
-        jButton2.setVisible(!esActualizacion);
-        btnActualizar.setVisible(esActualizacion);
+        jTextField1.setText(id_p);
     }
 
     /**
@@ -63,23 +55,22 @@ public class JDPie extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtCategoria = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtCodigo = new javax.swing.JTextField();
+        jTextField6 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtDescripcion = new javax.swing.JTextField();
+        jTextField7 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        txtColor = new javax.swing.JTextField();
+        jTextField8 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        txtMaterial = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtDimensiones = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        btnActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -92,23 +83,65 @@ public class JDPie extends javax.swing.JDialog {
         jLabel8.setBackground(java.awt.Color.white);
         jLabel8.setText("ID_Pieza:");
 
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+
         jTextField1.setEditable(false);
 
         jLabel6.setBackground(java.awt.Color.white);
         jLabel6.setText("Categoria:");
 
+        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField5ActionPerformed(evt);
+            }
+        });
+
         jLabel7.setBackground(java.awt.Color.white);
         jLabel7.setText("Codigo:");
+
+        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField6ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setBackground(java.awt.Color.white);
         jLabel4.setText("Descripcion:");
 
+        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField7ActionPerformed(evt);
+            }
+        });
+
         jLabel10.setBackground(java.awt.Color.white);
         jLabel10.setText("Color:");
 
+        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField8ActionPerformed(evt);
+            }
+        });
+
         jLabel1.setText("Material:");
 
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+
         jLabel2.setText("Dimensiones: ");
+
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -129,20 +162,20 @@ public class JDPie extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCodigo)
-                            .addComponent(txtCategoria)
-                            .addComponent(txtNombre)
+                            .addComponent(jTextField6)
+                            .addComponent(jTextField5)
+                            .addComponent(jTextField2)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtDescripcion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                                    .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                                     .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtColor, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(0, 172, Short.MAX_VALUE)))
                         .addGap(43, 43, 43))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtMaterial, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                            .addComponent(txtDimensiones))
+                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                            .addComponent(jTextField4))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -155,31 +188,31 @@ public class JDPie extends javax.swing.JDialog {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(txtColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(txtMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtDimensiones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
@@ -197,13 +230,6 @@ public class JDPie extends javax.swing.JDialog {
             }
         });
 
-        btnActualizar.setText("Actualizar");
-        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -214,26 +240,22 @@ public class JDPie extends javax.swing.JDialog {
                         .addContainerGap()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(204, 204, 204)
+                        .addGap(161, 161, 161)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                        .addGap(109, 109, 109)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(233, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         pack();
@@ -250,16 +272,18 @@ public class JDPie extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        if (jTextField1.getText().equals("") || txtNombre.getText().equals("") || txtCategoria.getText().equals("") ||
-            txtCodigo.getText().equals("") || txtDescripcion.getText().equals("") || txtColor.getText().equals("")) {
+        if (jTextField1.getText().equals("") || jTextField2.getText().equals("") || jTextField5.getText().equals("") ||
+            jTextField6.getText().equals("") || jTextField7.getText().equals("") || jTextField8.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese todos los datos", "Error", JOptionPane.ERROR_MESSAGE);
         } 
         else {
-            nom_p=txtNombre.getText();
-            id_p = jTextField1.getText();
-            ObjPie.SetPieza(id_p,txtNombre.getText(),txtCategoria.getText(),txtCodigo.getText(),txtColor.getText(),txtDescripcion.getText(),txtMaterial.getText(),txtDimensiones.getText());
+            nom_p=jTextField2.getText();
+            
+            ObjPie.SetPieza(id_p,jTextField2.getText(),jTextField5.getText(),jTextField6.getText(),jTextField8.getText(),jTextField7.getText(),jTextField3.getText(),jTextField4.getText());
             JDPie2 pieza2 = new JDPie2(this,true,ObjPie,this.Conexion_Actual);
- 
+           
+            
+           
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -269,81 +293,34 @@ public class JDPie extends javax.swing.JDialog {
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        try {
-        // Captura los valores de los campos de texto
-        String id = jTextField1.getText();
-        String nom = txtNombre.getText();
-        String codig = txtCodigo.getText();
-        String desc = txtDescripcion.getText();
-        String mat = txtMaterial.getText();
-        String dim = txtDimensiones.getText();
-        String cat = txtCategoria.getText();
-        String color = txtColor.getText();
-        
-        // Llama al método GenerarActualizar con los valores capturados
-        boolean resultado = GenerarActualizar(id, nom, codig, desc, mat, dim, cat, color);
-        
-        // Muestra un mensaje en función del resultado
-        if (resultado) {
-            JOptionPane.showMessageDialog(this, "Actualización exitosa");
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Error al actualizar");
-        }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_btnActualizarActionPerformed
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
-    
-    public void cargarDatos(Pieza pieza) {
-        jTextField1.setText(pieza.getId_pieza());
-        txtNombre.setText(pieza.getNombre_pie());
-        txtCodigo.setText(pieza.getCodigo_pie());
-        txtDescripcion.setText(pieza.getDescripcion_pie());
-        txtMaterial.setText(pieza.getMaterial_pie());
-        txtDimensiones.setText(pieza.getDimensiones_pie());
-        txtCategoria.setText(pieza.getCategoria_pie());        
-        txtColor.setText(pieza.getColor_pie());    
-        
-    }
-    
-    private boolean GenerarActualizar(String id, String nombre, String codigo, String descr, String material, String dimensiones, String categoria,  String color) {
-    String query = "UPDATE pieza SET Pie_Nombre = ?, Pie_Codigo = ?, Pie_Descripcion = ?, Pie_Material  = ?, Pie_Dimensiones = ?, Pie_Categoria = ?, PIE_COlor = ? WHERE ID_Pieza = ?";
-    
-    try {
-        // Prepara la sentencia SQL
-        PreparedStatement stmt = Conexion_Actual.getConnection().prepareStatement(query);
-        
-        // Asigna los valores a los parámetros
-        stmt.setString(1, nombre);
-        stmt.setString(2, codigo);
-        stmt.setString(3, descr);
-        stmt.setString(4, material);
-        stmt.setString(5, dimensiones);
-        stmt.setString(6, categoria);
-        stmt.setString(7, color);
-        stmt.setString(8, id); 
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField5ActionPerformed
 
-        // Ejecuta la actualización y captura las filas afectadas
-        int rowsUpdated = stmt.executeUpdate();
+    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField6ActionPerformed
 
-        // Cierra el PreparedStatement
-        stmt.close(); 
-        
-        // Retorna true si se actualizó al menos una fila
-        return rowsUpdated > 0; 
+    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField8ActionPerformed
 
-        } catch (SQLException e) {
-            // Muestra mensaje de error y traza la pila del error
-            JOptionPane.showMessageDialog(null, "Error al Generar la Consulta: " + e.toString());
-            e.printStackTrace(); // Muestra el error en consola para depuración
-            return false;
-        }
-    }
-    
+    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField7ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -395,7 +372,6 @@ public class JDPie extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -408,12 +384,12 @@ public class JDPie extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField txtCategoria;
-    private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtColor;
-    private javax.swing.JTextField txtDescripcion;
-    private javax.swing.JTextField txtDimensiones;
-    private javax.swing.JTextField txtMaterial;
-    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
     // End of variables declaration//GEN-END:variables
 }

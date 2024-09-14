@@ -70,6 +70,7 @@ public class Confirmacion_Compra extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(513, 271));
         setMinimumSize(new java.awt.Dimension(513, 271));
+        setPreferredSize(new java.awt.Dimension(513, 271));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Confirmación de Datos:");

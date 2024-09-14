@@ -1,7 +1,6 @@
 package Formularios_Inserts;
 import proyecto_java_proveedores.ConexionBD;
 import Confirmacion_Inserts.Confirmacion_Oferta;
-import VerDatos.JP_VerDatos;
 import com.toedter.calendar.JDateChooser;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,7 +9,6 @@ import java.text.SimpleDateFormat;
 import javax.swing.*;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.border.EmptyBorder;
 
 public class Formulario_Insert_Oferta extends JPanel{
@@ -33,36 +31,8 @@ public class Formulario_Insert_Oferta extends JPanel{
     JTextField TF_Precio=new JTextField();/// Para Ingresar el Precio.
     JDateChooser DC_FechaInicio=new JDateChooser(); /// Para Ingresar la Fecha de Inicio.
     JDateChooser DC_FechaFin=new JDateChooser();  /// Para Ingresar la Fecha de Fin.
-    List<String>Registro; 
-    JFrame Contenedor;
-    JP_VerDatos VerDatos;
     public Formulario_Insert_Oferta(ConexionBD Conexion_Actual){
         this.Conexion_Actual=Conexion_Actual; 
-        this.InicializarComponentes("Insertar Nueva Oferta: ", "Insertar Datos");
-    }
-    
-    public Formulario_Insert_Oferta(ConexionBD Conexion_Actual, List<String> Registro,JFrame Contenedor ,JP_VerDatos VerDatos){
-        this.Conexion_Actual=Conexion_Actual; 
-        this.Registro=Registro; 
-        this.Contenedor=Contenedor;
-        this.VerDatos=VerDatos;
-        JOptionPane.showMessageDialog(null, Registro);
-        this.InicializarComponentes("Actualizar Oferta: ", "Actualizar");
-        CB_IDProveedor.setSelectedIndex(Integer.parseInt(Registro.get(1))-1);
-        CB_IDPieza.setSelectedIndex(Integer.parseInt(Registro.get(2))-1);
-        SimpleDateFormat formato=new SimpleDateFormat("yyyy-MM-dd"); 
-        try{
-            Date FechaI=formato.parse(Registro.get(4));
-            Date FechaF=formato.parse(Registro.get(5));
-            DC_FechaInicio.setDate(FechaI);
-            DC_FechaFin.setDate(FechaF);
-        }catch(Exception e){
-        }
-        
-        TF_Precio.setText(Registro.get(3));
-    }
-    
-    private void InicializarComponentes(String Titulo_Asignado, String TextoBoton){
         /// Inicializar Panel.
         this.setPreferredSize(Tamaño);
         this.setVisible(true);
@@ -76,7 +46,7 @@ public class Formulario_Insert_Oferta extends JPanel{
         Encabezado.setLayout(new FlowLayout(FlowLayout.LEFT, 0,0));
         Encabezado.setPreferredSize(new Dimension(900, 30));
         Encabezado.setMaximumSize(new Dimension(900, 30));
-        Titulo.setText(Titulo_Asignado);
+        Titulo.setText("Registrar Nueva Oferta:");
         Titulo.setFont(new Font("Arial", Font.BOLD,18));
         /// Contenido.
         Contenido.setLayout(new BoxLayout(Contenido, BoxLayout.Y_AXIS));
@@ -126,7 +96,7 @@ public class Formulario_Insert_Oferta extends JPanel{
         JPanel P_Buscar=new JPanel(); 
         P_Buscar.setPreferredSize(new Dimension(900, 30));
         P_Buscar.setLayout(new FlowLayout(FlowLayout.CENTER,20,15)); 
-        B_Insertar.setText(TextoBoton);
+        B_Insertar.setText("Insertar Datos");
         B_Insertar.addActionListener(this.Funcion_Insertar());
         P_Buscar.add(B_Insertar); 
         Contenido.add(ID_Combos); 
@@ -170,60 +140,17 @@ public class Formulario_Insert_Oferta extends JPanel{
         ActionListener Click_Insertar=new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Proveedor_Seleccionado=CB_IDProveedor.getSelectedItem().toString();
+                Pieza_Seleccionada=CB_IDPieza.getSelectedItem().toString();
+                Precio_Seleccionado=TF_Precio.getText();
                 SimpleDateFormat Formato=new SimpleDateFormat("yyyy-MM-dd"); 
-                if(B_Insertar.getText().equals("Insertar Datos")){
-                    Proveedor_Seleccionado=CB_IDProveedor.getSelectedItem().toString();
-                    Pieza_Seleccionada=CB_IDPieza.getSelectedItem().toString();
-                    Precio_Seleccionado=TF_Precio.getText();
-                    FechaI_Seleccionada=Formato.format(DC_FechaInicio.getDate());
-                    FechaF_Seleccionada=Formato.format(DC_FechaFin.getDate());
-                    ID_Proveedor=ObtenerIDs(Proveedores, Proveedor_Seleccionado); 
-                    ID_Pieza=ObtenerIDs(Pieza, Pieza_Seleccionada); 
-                    JOptionPane.showMessageDialog(null, "ID_Pieza:"+ID_Pieza);
-                    Confirmacion_Oferta Confirmar=new Confirmacion_Oferta(Proveedor_Seleccionado,Pieza_Seleccionada, 
-                            Precio_Seleccionado, FechaI_Seleccionada, FechaF_Seleccionada, ID_Proveedor, ID_Pieza, Conexion_Actual);
-                }
-                else{
-                    List<String>CamposActualizados=new ArrayList();
-                    List<String>Campos=Conexion_Actual.GetAtributosTabla("oferta");
-                    List<String>NuevosDatos=new ArrayList(); 
-                    if(CB_IDProveedor.getSelectedIndex()!=Integer.parseInt(Registro.get(1))-1){
-                        CamposActualizados.add(Campos.get(1));
-                        NuevosDatos.add(String.valueOf(CB_IDProveedor.getSelectedIndex()+1));
-                    }
-                    if(CB_IDPieza.getSelectedIndex()!=Integer.parseInt(Registro.get(2))-1){
-                        CamposActualizados.add(Campos.get(2));
-                        NuevosDatos.add(String.valueOf(CB_IDPieza.getSelectedIndex()+1));
-                    }
-                    String Fecha=Formato.format(DC_FechaInicio.getDate());
-                    if(!Fecha.equals(Registro.get(4))){
-                        CamposActualizados.add(Campos.get(4));
-                        try{
-                            NuevosDatos.add(Fecha);
-                        }catch(Exception ex){
-                        
-                        }
-                    }
-                    String FechaF=Formato.format(DC_FechaFin.getDate());
-                    if(!FechaF.equals(Registro.get(5))){
-                        CamposActualizados.add(Campos.get(5));
-                        try{
-                            
-                            NuevosDatos.add(FechaF);
-                        }catch(Exception ex){
-                        
-                        }
-                    }
-                    if(!TF_Precio.getText().equals(Registro.get(3))){
-                        CamposActualizados.add(Campos.get(3));
-                        NuevosDatos.add(TF_Precio.getText());
-                    }
-                    
-                    if(Conexion_Actual.ActualizarRegistro("oferta",CamposActualizados, NuevosDatos, Integer.parseInt(Registro.get(0)))){
-                        VerDatos.InicializarTabla();
-                        Contenedor.dispose(); 
-                    }
-                }    
+                FechaI_Seleccionada=Formato.format(DC_FechaInicio.getDate());
+                FechaF_Seleccionada=Formato.format(DC_FechaFin.getDate());
+                ID_Proveedor=ObtenerIDs(Proveedores, Proveedor_Seleccionado); 
+                ID_Pieza=ObtenerIDs(Pieza, Pieza_Seleccionada); 
+                JOptionPane.showMessageDialog(null, "ID_Pieza:"+ID_Pieza);
+                Confirmacion_Oferta Confirmar=new Confirmacion_Oferta(Proveedor_Seleccionado,Pieza_Seleccionada, 
+                        Precio_Seleccionado, FechaI_Seleccionada, FechaF_Seleccionada, ID_Proveedor, ID_Pieza, Conexion_Actual);
             }
         }; 
         return Click_Insertar; 
