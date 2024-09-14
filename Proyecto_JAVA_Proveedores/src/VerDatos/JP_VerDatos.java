@@ -293,7 +293,6 @@ public class JP_VerDatos extends javax.swing.JPanel {
     dialogo.setVisible(true);
 }
     
-=======
     private void B_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_EliminarActionPerformed
         // TODO add your handling code here:
        // Obtener el modelo de la tabla
